@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Book Procurement Slot | Kisan Upaj Setu</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8f4;
+            color: #19351f;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #123d1e;
+            color: white;
+            padding: 22px 7%;
+        }
+
+        .header h2 {
+            color: white;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e0e8e1;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(20,70,30,0.06);
+        }
+
+        .title {
+            margin-bottom: 25px;
+        }
+
+        .title h1 {
+            color: #176b32;
+        }
+
+        .title p {
+            margin-top: 7px;
+            color: #78847b;
+        }
+
+        .farmer-box {
+            background: #eef8ef;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .farmer-box strong {
+            color: #176b32;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #46554b;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d7e2d8;
+            border-radius: 8px;
+            outline: none;
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #16803c;
+        }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #16803c;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #126a31;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 18px;
+            color: #16803c;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff9e8;
+            border-radius: 10px;
+            font-size: 13px;
+            color: #6b5a2d;
+        }
+
+        @media(max-width:600px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .container {
+                margin: 25px auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h2>🌾 Kisan Upaj Setu</h2>
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="title">
+            <h1>📅 Book Procurement Slot</h1>
+
+            <p>
+                Select a procurement centre, crop and convenient time slot.
+            </p>
+        </div>
+
+        <div class="farmer-box">
+            Farmer:
+            <strong id="farmerName">Farmer</strong>
+        </div>
+
+        <form id="slotForm">
+
+            <div class="grid">
+
+                <div class="field full">
+                    <label for="center">Procurement Centre</label>
+
+                    <select id="center" required>
+
+                        <option value="">
+                            Select Procurement Centre
+                        </option>
+
+                        <option value="Greenfield Procurement Center">
+                            Greenfield Procurement Center
+                        </option>
+
+                        <option value="Kisan Seva Center">
+                            Kisan Seva Center
+                        </option>
+
+                        <option value="Government Grain Center">
+                            Government Grain Center
+                        </option>
+
+                    </select>
+                </div>
+
+
+                <div class="field">
+
+                    <label for="crop">Crop</label>
+
+                    <select id="crop" required>
+
+                        <option value="">
+                            Select Crop
+                        </option>
+
+                        <option value="Wheat">Wheat</option>
+                        <option value="Rice">Rice</option>
+                        <option value="Maize">Maize</option>
+                        <option value="Paddy">Paddy</option>
+                        <option value="Mustard">Mustard</option>
+                        <option value="Cotton">Cotton</option>
+                        <option value="Soybean">Soybean</option>
+                        <option value="Other">Other</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="quantity">Quantity (Quintals)</label>
+
+                    <input
+                        type="number"
+                        id="quantity"
+                        min="1"
+                        step="0.1"
+                        placeholder="Enter quantity"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="date">Procurement Date</label>
+
+                    <input
+                        type="date"
+                        id="date"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="time">Time Slot</label>
+
+                    <select id="time" required>
+
+                        <option value="">
+                            Select Time Slot
+                        </option>
+
+                        <option value="09:00 AM - 10:00 AM">
+                            09:00 AM - 10:00 AM
+                        </option>
+
+                        <option value="10:00 AM - 11:00 AM">
+                            10:00 AM - 11:00 AM
+                        </option>
+
+                        <option value="11:00 AM - 12:00 PM">
+                            11:00 AM - 12:00 PM
+                        </option>
+
+                        <option value="12:00 PM - 01:00 PM">
+                            12:00 PM - 01:00 PM
+                        </option>
+
+                        <option value="02:00 PM - 03:00 PM">
+                            02:00 PM - 03:00 PM
+                        </option>
+
+                        <option value="03:00 PM - 04:00 PM">
+                            03:00 PM - 04:00 PM
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="info">
+
+                💡 Tip: Booking a slot helps reduce waiting time
+                at the procurement centre.
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="submit-btn">
+
+                Confirm Procurement Slot →
+
+            </button>
+
+        </form>
+
+
+        <a href="dashboard.html" class="back">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* ================= LOAD FARMER ================= */
+
+    const savedFarmer =
+        localStorage.getItem("kisanSetuFarmer");
+
+
+    if (!savedFarmer) {
+
+        alert("Please register as a farmer first.");
+
+        window.location.href = "../index.html";
+
+    } else {
+
+        const farmer =
+            JSON.parse(savedFarmer);
+
+        document.getElementById("farmerName").innerText =
+            farmer.name;
+
+
+        /* Automatically select registered crop */
+
+        if (farmer.crop) {
+
+            const cropSelect =
+                document.getElementById("crop");
+
+            const cropExists =
+                Array.from(cropSelect.options)
+                .some(option => option.value === farmer.crop);
+
+            if (cropExists) {
+
+                cropSelect.value =
+                    farmer.crop;
+
+            }
+
+        }
+
+
+        /* Automatically fill registered quantity */
+
+        if (farmer.quantity) {
+
+            document.getElementById("quantity").value =
+                farmer.quantity;
+
+        }
+
+    }
+
+
+    /* ================= MINIMUM DATE ================= */
+
+    const now = new Date();
+
+    const year =
+        now.getFullYear();
+
+    const month =
+        String(now.getMonth() + 1).padStart(2, "0");
+
+    const day =
+        String(now.getDate()).padStart(2, "0");
+
+    const today =
+        `${year}-${month}-${day}`;
+
+    document.getElementById("date").min =
+        today;
+
+
+    /* ================= BOOK SLOT ================= */
+
+    document.getElementById("slotForm")
+    .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+
+        const center =
+            document.getElementById("center").value;
+
+
+        const crop =
+            document.getElementById("crop").value;
+
+
+        const quantity =
+            document.getElementById("quantity").value;
+
+
+        const date =
+            document.getElementById("date").value;
+
+
+        const time =
+            document.getElementById("time").value;
+
+
+        /* ================= VALIDATION ================= */
+
+        if (Number(quantity) < 1) {
+
+            alert(
+                "Quantity must be at least 1 quintal."
+            );
+
+            return;
+        }
+
+
+        if (!date) {
+
+            alert(
+                "Please select a procurement date."
+            );
+
+            return;
+        }
+
+
+        /* ================= FIXED DEMO VALUES ================= */
+
+        const token = "KUS-001";
+
+        const queuePosition = 5;
+
+        const waitTime = 25;
+
+
+        /* ================= BOOKING DATA ================= */
+
+        const booking = {
+
+            center: center,
+
+            crop: crop,
+
+            quantity: quantity,
+
+            date: date,
+
+            time: time,
+
+            token: token,
+
+            status: "CONFIRMED",
+
+            queuePosition: queuePosition,
+
+            waitTime: waitTime,
+
+            procurementStatus: "At Center",
+
+            paymentStatus: "Pending"
+
+        };
+
+
+        /* ================= SAVE BOOKING ================= */
+
+        localStorage.setItem(
+
+            "kisanSetuBooking",
+
+            JSON.stringify(booking)
+
+        );
+
+
+        /* ================= SUCCESS MESSAGE ================= */
+
+        alert(
+
+            "Slot booked successfully!\n\n" +
+
+            "Your Token: " + token +
+
+            "\nQueue Position: #" +
+            queuePosition +
+
+            "\nEstimated Wait: " +
+            waitTime +
+            " min"
+
+        );
+
+
+        /* ================= GO TO DASHBOARD ================= */
+
+        window.location.href =
+            "dashboard.html";
+
+    });
+
+</script>
+
+</body>
+</html>

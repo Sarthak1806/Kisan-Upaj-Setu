@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kisan Upaj Setu | Smart Procurement Platform</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f5f9f5;
+            color: #17351d;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            height: 72px;
+            background: #ffffff;
+            border-bottom: 1px solid #e5ebe5;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 34px;
+        }
+
+        .logo h2 {
+            color: #16803c;
+            font-size: 22px;
+        }
+
+        .logo small {
+            color: #77827a;
+            font-size: 9px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #536057;
+            font-size: 14px;
+            margin-right: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #16803c;
+        }
+
+        .login-btn {
+            border: none;
+            background: #16803c;
+            color: white;
+            padding: 11px 22px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .login-btn:hover {
+            background: #126b32;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 620px;
+
+            padding: 80px 8%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 60px;
+
+            background:
+                radial-gradient(
+                    circle at 80% 30%,
+                    #dff2df,
+                    transparent 30%
+                ),
+                #f5f9f5;
+        }
+
+        .hero-content {
+            max-width: 610px;
+        }
+
+        .badge {
+            display: inline-block;
+
+            background: #e3f4e6;
+            color: #167238;
+
+            padding: 8px 15px;
+
+            border-radius: 30px;
+
+            font-size: 11px;
+            font-weight: bold;
+
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            color: #16803c;
+        }
+
+        .hero-text {
+            margin-top: 22px;
+
+            color: #69756d;
+
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            margin-top: 30px;
+
+            display: flex;
+            gap: 12px;
+        }
+
+        .primary-btn {
+            border: none;
+
+            background: #16803c;
+            color: white;
+
+            padding: 14px 25px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .primary-btn:hover {
+            background: #126b32;
+        }
+
+        .secondary-btn {
+            border: 1px solid #d8e3d9;
+
+            background: white;
+            color: #315438;
+
+            padding: 14px 25px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+        }
+
+        .secondary-btn:hover {
+            background: #f0f7f1;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 45px;
+
+            margin-top: 45px;
+        }
+
+        .hero-stats div {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .hero-stats strong {
+            font-size: 22px;
+        }
+
+        .hero-stats small {
+            color: #7d897f;
+        }
+
+        /* ================= DASHBOARD PREVIEW ================= */
+
+        .preview {
+            width: 420px;
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 20px 50px rgba(25, 70, 35, 0.12);
+
+            border: 1px solid #e1e9e1;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+
+            background: #def1e1;
+
+            border-radius: 50%;
+
+            display: grid;
+            place-items: center;
+
+            color: #167238;
+            font-weight: bold;
+        }
+
+        .booking-card {
+            margin-top: 22px;
+
+            background: #f0f8f1;
+
+            padding: 18px;
+
+            border-radius: 11px;
+        }
+
+        .booking-card small {
+            color: #78847b;
+        }
+
+        .booking-card h3 {
+            margin-top: 6px;
+        }
+
+        .confirmed {
+            display: inline-block;
+
+            margin-top: 10px;
+
+            padding: 6px 10px;
+
+            background: #d9f2dd;
+            color: #167238;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .queue-box {
+            margin-top: 18px;
+
+            background: #fffaf0;
+
+            padding: 18px;
+
+            border-radius: 11px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .queue-number {
+            color: #16803c;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .queue-box small {
+            color: #8a8170;
+        }
+
+        /* ================= FEATURES ================= */
+
+        .section {
+            padding: 85px 8%;
+            background: white;
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 680px;
+
+            margin: auto;
+        }
+
+        .section-heading span {
+            color: #16803c;
+
+            font-size: 11px;
+            font-weight: bold;
+
+            letter-spacing: 1px;
+        }
+
+        .section-heading h2 {
+            margin-top: 10px;
+
+            font-size: 36px;
+        }
+
+        .section-heading p {
+            margin-top: 12px;
+
+            color: #748078;
+
+            line-height: 1.6;
+        }
+
+        .feature-grid {
+            max-width: 1100px;
+
+            margin: 50px auto 0;
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .feature-card {
+            border: 1px solid #e1e9e1;
+
+            border-radius: 13px;
+
+            padding: 27px;
+
+            transition: 0.25s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 15px 35px rgba(20, 70, 30, 0.08);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+
+            background: #e8f5ea;
+
+            border-radius: 10px;
+
+            display: grid;
+            place-items: center;
+
+            font-size: 22px;
+        }
+
+        .feature-card h3 {
+            margin-top: 17px;
+        }
+
+        .feature-card p {
+            margin-top: 9px;
+
+            color: #748078;
+
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* ================= PROCUREMENT CENTERS ================= */
+
+        .centers-section {
+            padding: 85px 8%;
+
+            background: #f5f9f5;
+        }
+
+        .center-grid {
+            max-width: 1100px;
+
+            margin: 50px auto 0;
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .center-card {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 14px;
+
+            border: 1px solid #e1e9e1;
+        }
+
+        .center-status {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            background: #def2e1;
+
+            color: #167238;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .center-card h3 {
+            margin-top: 17px;
+        }
+
+        .center-card p {
+            color: #78847b;
+
+            font-size: 13px;
+
+            margin-top: 8px;
+        }
+
+        .center-info {
+            display: flex;
+
+            gap: 45px;
+
+            margin-top: 20px;
+        }
+
+        .center-info div {
+            display: flex;
+            flex-direction: column;
+
+            gap: 5px;
+        }
+
+        .center-info small {
+            color: #929b94;
+        }
+
+        .center-info strong {
+            font-size: 13px;
+        }
+
+        /* ================= CTA ================= */
+
+        .cta {
+            margin: 70px 8%;
+
+            padding: 50px;
+
+            background: #176c35;
+
+            color: white;
+
+            border-radius: 18px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 30px;
+        }
+
+        .cta h2 {
+            font-size: 30px;
+        }
+
+        .cta p {
+            margin-top: 10px;
+
+            color: #cce4d1;
+        }
+
+        .cta button {
+            background: white;
+            color: #176c35;
+        }
+
+        .cta button:hover {
+            background: #f0f5f0;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #102a16;
+
+            color: white;
+
+            padding: 35px 8%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+        footer p {
+            color: #94a398;
+
+            font-size: 12px;
+        }
+
+        /* ================= LOGIN MODAL ================= */
+
+        .modal {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(0, 0, 0, 0.6);
+
+            z-index: 1000;
+
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-box {
+            width: 400px;
+            max-width: 90%;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 18px;
+
+            text-align: center;
+
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+
+            right: 18px;
+            top: 12px;
+
+            border: none;
+
+            background: none;
+
+            font-size: 28px;
+
+            color: #777;
+
+            cursor: pointer;
+        }
+
+        .login-icon {
+            font-size: 45px;
+        }
+
+        .login-box h2 {
+            margin-top: 10px;
+        }
+
+        .login-box p {
+            margin-top: 7px;
+
+            color: #78847b;
+
+            font-size: 13px;
+        }
+
+        .login-box input {
+            width: 100%;
+
+            margin-top: 12px;
+
+            padding: 13px;
+
+            border: 1px solid #dce5dd;
+
+            border-radius: 8px;
+
+            outline: none;
+        }
+
+        .login-box input:focus {
+            border-color: #16803c;
+        }
+
+        .login-box .primary-btn {
+            width: 100%;
+
+            margin-top: 18px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 900px) {
+
+            nav {
+                padding: 0 20px;
+            }
+
+            .hero {
+                flex-direction: column;
+
+                padding: 60px 20px;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-buttons,
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .preview {
+                width: 100%;
+                max-width: 420px;
+            }
+
+            .feature-grid,
+            .center-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .cta {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: none;
+            }
+        }
+
+        @media(max-width: 600px) {
+
+            .feature-grid,
+            .center-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .hero-stats {
+                gap: 20px;
+            }
+
+            footer {
+                flex-direction: column;
+
+                gap: 15px;
+
+                text-align: center;
+            }
+
+            .logo h2 {
+                font-size: 19px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav>
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🌾
+            </div>
+
+            <div>
+                <h2>Kisan Upaj Setu</h2>
+                <small>
+                    Smart Farmer Procurement Platform
+                </small>
+            </div>
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="#home">
+                Home
+            </a>
+
+            <a href="#features">
+                Features
+            </a>
+
+            <a href="#centers">
+                Procurement Centers
+            </a>
+
+            <button
+                class="login-btn"
+                onclick="openLogin()">
+
+                Farmer Login
+
+            </button>
+
+            <button
+                class="secondary-btn"
+                onclick="window.location.href='pages/register.html'">
+
+                Register
+
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero" id="home">
+
+
+        <div class="hero-content">
+
+            <div class="badge">
+                🇮🇳 Smart India Hackathon • PS 26032
+            </div>
+
+
+            <h1>
+
+                Smart Procurement
+
+                <span>
+                    Made Simple for Farmers
+                </span>
+
+            </h1>
+
+
+            <p class="hero-text">
+
+                Book your procurement slot, check your
+                queue position, track your produce and
+                know your payment status — all from
+                one simple platform.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <button
+                    class="primary-btn"
+                    onclick="openLogin()">
+
+                    Get Started →
+
+                </button>
+
+
+                <button
+                    class="secondary-btn"
+                    onclick="showDemo()">
+
+                    ▶ How It Works
+
+                </button>
+
+            </div>
+
+
+            <div class="hero-stats">
+
+                <div>
+                    <strong>500+</strong>
+                    <small>Farmers</small>
+                </div>
+
+                <div>
+                    <strong>25+</strong>
+                    <small>Centers</small>
+                </div>
+
+                <div>
+                    <strong>98%</strong>
+                    <small>On-Time</small>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DASHBOARD PREVIEW -->
+
+        <div class="preview">
+
+            <div class="preview-header">
+
+                <div>
+
+                    <small>
+                        Farmer Dashboard
+                    </small>
+
+                    <h3>
+                        Welcome, Farmer 👨‍🌾
+                    </h3>
+
+                </div>
+
+
+                <div class="avatar">
+                    <span>F</span>
+                </div>
+
+            </div>
+
+
+            <div class="booking-card">
+
+                <small>
+                    Today's Procurement
+                </small>
+
+                <h3>
+                    Wheat • 42 Quintals
+                </h3>
+
+                <span class="confirmed">
+                    ✓ SLOT CONFIRMED
+                </span>
+
+            </div>
+
+
+            <div class="queue-box">
+
+                <div>
+
+                    <small>
+                        Your Queue Position
+                    </small>
+
+                    <div class="queue-number">
+                        #5
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        Estimated Waiting
+                    </small>
+
+                    <h3>
+                        25 min
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div style="margin-top:20px;">
+
+                <small style="color:#78847b;">
+                    Procurement Progress
+                </small>
+
+                <div style="
+                    height:7px;
+                    background:#e4ebe5;
+                    border-radius:10px;
+                    margin-top:8px;
+                ">
+
+                    <div style="
+                        width:70%;
+                        height:100%;
+                        background:#16803c;
+                        border-radius:10px;
+                    ">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FEATURES ================= -->
+
+    <section class="section" id="features">
+
+        <div class="section-heading">
+
+            <span>
+                SMART PROCUREMENT
+            </span>
+
+            <h2>
+                Everything a Farmer Needs
+            </h2>
+
+            <p>
+                Kisan Upaj Setu reduces congestion and waiting time
+                by providing farmers with transparent,
+                procurement information.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    👨‍🌾
+                </div>
+
+                <h3>
+                    Farmer Registration
+                </h3>
+
+                <p>
+                    Register farmers and maintain their
+                    procurement information digitally.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📅
+                </div>
+
+                <h3>
+                    Slot Booking
+                </h3>
+
+                <p>
+                    Farmers can choose a convenient date
+                    and procurement time slot.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🚶
+                </div>
+
+                <h3>
+                    Real-Time Queue
+                </h3>
+
+                <p>
+                    See token number, queue position and
+                    estimated waiting time.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🔔
+                </div>
+
+                <h3>
+                    Smart Notifications
+                </h3>
+
+                <p>
+                    Receive updates about slot booking,
+                    queue movement and procurement.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📦
+                </div>
+
+                <h3>
+                    Procurement Tracking
+                </h3>
+
+                <p>
+                    Track produce verification and
+                    procurement completion.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    💰
+                </div>
+
+                <h3>
+                    Payment Tracking
+                </h3>
+
+                <p>
+                    Know whether your procurement payment
+                    is pending or completed.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= CENTERS ================= -->
+
+    <section class="centers-section" id="centers">
+
+        <div class="section-heading">
+
+            <span>
+                PROCUREMENT CENTERS
+            </span>
+
+            <h2>
+                Find a Procurement Center
+            </h2>
+
+            <p>
+                Check availability and estimated waiting
+                time before visiting the center.
+            </p>
+
+        </div>
+
+
+        <div class="center-grid">
+
+
+            <div class="center-card">
+
+                <span class="center-status">
+                    AVAILABLE
+                </span>
+
+                <h3>
+                    Greenfield Procurement Center
+                </h3>
+
+                <p>
+                    📍 Village Road
+                </p>
+
+                <div class="center-info">
+
+                    <div>
+                        <small>
+                            Distance
+                        </small>
+
+                        <strong>
+                            4.2 km
+                        </strong>
+                    </div>
+
+                    <div>
+                        <small>
+                            Wait Time
+                        </small>
+
+                        <strong>
+                            20 min
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="center-card">
+
+                <span class="center-status">
+                    AVAILABLE
+                </span>
+
+                <h3>
+                    Kisan Seva Center
+                </h3>
+
+                <p>
+                    📍 Main Market
+                </p>
+
+                <div class="center-info">
+
+                    <div>
+                        <small>
+                            Distance
+                        </small>
+
+                        <strong>
+                            7.8 km
+                        </strong>
+                    </div>
+
+                    <div>
+                        <small>
+                            Wait Time
+                        </small>
+
+                        <strong>
+                            45 min
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="center-card">
+
+                <span class="center-status">
+                    MODERATE
+                </span>
+
+                <h3>
+                    Government Grain Center
+                </h3>
+
+                <p>
+                    📍 Sector 12
+                </p>
+
+                <div class="center-info">
+
+                    <div>
+                        <small>
+                            Distance
+                        </small>
+
+                        <strong>
+                            11.4 km
+                        </strong>
+                    </div>
+
+                    <div>
+                        <small>
+                            Wait Time
+                        </small>
+
+                        <strong>
+                            1 hr 20 min
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= CTA ================= -->
+
+    <section class="cta">
+
+        <div>
+
+            <h2>
+                Less Waiting. More Transparency.
+            </h2>
+
+            <p>
+                A smarter procurement experience
+                for India's farmers.
+            </p>
+
+        </div>
+
+
+        <button
+            class="primary-btn"
+            onclick="window.location.href='pages/register.html'">
+
+            Register as Farmer →
+
+        </button>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🌾
+            </div>
+
+            <h3>
+                Kisan Upaj Setu
+            </h3>
+
+        </div>
+
+
+        <p>
+            Smart Procurement Platform • SIH Problem Statement 26032
+        </p>
+
+    </footer>
+
+
+    <!-- ================= LOGIN POPUP ================= -->
+
+    <div
+        class="modal"
+        id="loginModal">
+
+
+        <div class="login-box">
+
+
+            <button
+                class="close-btn"
+                onclick="closeLogin()">
+
+                ×
+
+            </button>
+
+
+            <div class="login-icon">
+                👨‍🌾
+            </div>
+
+
+            <h2>
+                Farmer Login
+            </h2>
+
+
+            <p>
+                Login to book and track your procurement
+            </p>
+
+
+            <input
+                id="mobile"
+                type="tel"
+                placeholder="Enter mobile number"
+                maxlength="10"
+            >
+
+
+            <input
+                id="password"
+                type="password"
+                placeholder="Enter password"
+            >
+
+
+            <button
+                class="primary-btn"
+                onclick="login()">
+
+                Login to Dashboard →
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /* ================= LOGIN ================= */
+
+        function openLogin() {
+
+            document.getElementById("loginModal")
+                .style.display = "flex";
+
+        }
+
+
+        function closeLogin() {
+
+            document.getElementById("loginModal")
+                .style.display = "none";
+
+        }
+
+
+        function login() {
+
+            const mobile =
+                document.getElementById("mobile").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+            const savedFarmer =
+                localStorage.getItem("kisanSetuFarmer");
+
+
+            if (!savedFarmer) {
+
+                alert(
+                    "No farmer account found. Please register first."
+                );
+
+                window.location.href =
+                    "pages/register.html";
+
+                return;
+            }
+
+
+            const farmer =
+                JSON.parse(savedFarmer);
+
+
+            if (
+                mobile === farmer.mobile &&
+                password === farmer.password
+            ) {
+
+                localStorage.setItem(
+                    "kisanSetuLoggedIn",
+                    "true"
+                );
+
+                window.location.href =
+                    "pages/dashboard.html";
+
+            } else {
+
+                alert(
+                    "Invalid mobile number or password."
+                );
+
+            }
+
+        }
+
+
+        function showDemo() {
+
+            alert(
+                "Kisan Upaj Setu workflow: Register → Book Slot → Get Token → Track Queue → Procurement → Payment"
+            );
+
+        }
+
+
+        window.onclick = function(event) {
+
+            const modal =
+                document.getElementById("loginModal");
+
+            if (event.target === modal) {
+
+                closeLogin();
+
+            }
+
+        };
+
+    </script>
+
+
+</body>
+
+</html>

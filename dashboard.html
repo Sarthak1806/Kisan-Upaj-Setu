@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Farmer Dashboard | Kisan Upaj Setu</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f8f5;
+    color: #19351f;
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+    width: 240px;
+    background: #123d1e;
+    color: white;
+    padding: 25px 15px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 10px 30px;
+}
+
+.logo span {
+    font-size: 30px;
+}
+
+.logo h2 {
+    font-size: 20px;
+}
+
+.logo small {
+    color: #b9d0bd;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.menu button {
+    border: none;
+    background: transparent;
+    color: #d6e5d8;
+    padding: 13px;
+    text-align: left;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.menu button:hover,
+.menu .active {
+    background: #246b35;
+    color: white;
+}
+
+.logout {
+    margin-top: 30px;
+    border-top: 1px solid #356342;
+    padding-top: 20px;
+}
+
+/* ================= MAIN ================= */
+
+.main {
+    flex: 1;
+    padding: 30px 40px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar h1 {
+    font-size: 28px;
+}
+
+.topbar p {
+    color: #758078;
+    margin-top: 5px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    background: #dcefe0;
+    color: #176b32;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: bold;
+}
+
+/* ================= CARDS ================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 18px;
+    margin-top: 30px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #e1e8e1;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.card-icon {
+    font-size: 25px;
+}
+
+.card small {
+    display: block;
+    color: #7a857d;
+    margin-top: 12px;
+}
+
+.card strong {
+    display: block;
+    font-size: 23px;
+    margin-top: 5px;
+}
+
+/* ================= CONTENT ================= */
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.panel {
+    background: white;
+    border: 1px solid #e1e8e1;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.panel-header a {
+    color: #16803c;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/* ================= BOOKING ================= */
+
+.booking {
+    background: #f0f8f1;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.booking-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.booking h3 {
+    margin-top: 8px;
+}
+
+.status {
+    background: #d8f0dc;
+    color: #167238;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: bold;
+    height: fit-content;
+}
+
+.booking-details {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.booking-details small {
+    color: #7b857e;
+}
+
+.booking-details strong {
+    display: block;
+    margin-top: 5px;
+}
+
+/* ================= QUEUE ================= */
+
+.queue {
+    text-align: center;
+}
+
+.queue-number {
+    font-size: 58px;
+    color: #16803c;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.queue p {
+    color: #78847b;
+}
+
+.queue-info {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e3e8e3;
+}
+
+.queue-info small {
+    color: #7d887f;
+    display: block;
+}
+
+.queue-info strong {
+    display: block;
+    margin-top: 5px;
+}
+
+/* ================= BUTTON ================= */
+
+.book-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background: #16803c;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.book-btn:hover {
+    background: #126a31;
+}
+
+/* ================= PROGRESS ================= */
+
+.progress {
+    margin-top: 25px;
+}
+
+.steps {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+    position: relative;
+}
+
+.steps::before {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: 25px;
+    right: 25px;
+    height: 3px;
+    background: #dce5dd;
+}
+
+.step {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    font-size: 11px;
+    color: #77827a;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #dce5dd;
+    display: grid;
+    place-items: center;
+    margin: auto;
+    margin-bottom: 8px;
+}
+
+.completed .circle {
+    background: #16803c;
+    color: white;
+}
+
+/* ================= MODAL ================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-box {
+    width: 450px;
+    max-width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    position: relative;
+}
+
+.modal-box h2 {
+    color: #176b32;
+    margin-bottom: 15px;
+}
+
+.close {
+    position: absolute;
+    right: 18px;
+    top: 12px;
+    border: none;
+    background: none;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #e5eae5;
+}
+
+.info-row span {
+    color: #758078;
+}
+
+.info-row strong {
+    text-align: right;
+}
+
+.notification {
+    background: #f0f8f1;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:900px) {
+
+    .sidebar {
+        width: 190px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main {
+        padding: 25px;
+    }
+}
+
+@media(max-width:600px) {
+
+    .layout {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .menu {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .menu button {
+        white-space: nowrap;
+    }
+
+    .main {
+        padding: 20px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-details {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
+        align-items: flex-start;
+        gap: 15px;
+        flex-direction: column;
+    }
+
+    .topbar h1 {
+        font-size: 23px;
+    }
+
+    .profile {
+        align-self: flex-end;
+    }
+
+    .steps {
+        gap: 5px;
+    }
+
+    .step {
+        font-size: 9px;
+    }
+
+    .circle {
+        width: 27px;
+        height: 27px;
+        font-size: 11px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<span>🌾</span>
+
+<div>
+<h2>Kisan Upaj Setu</h2>
+<small>Farmer Portal</small>
+</div>
+
+</div>
+
+<div class="menu">
+
+<button class="active">
+🏠 Dashboard
+</button>
+
+<button onclick="bookSlot()">
+📅 Book Procurement Slot
+</button>
+
+<button onclick="showToken()">
+🎟️ My Token
+</button>
+
+<button onclick="showQueue()">
+🚶 Live Queue
+</button>
+
+<button onclick="showProcurement()">
+📦 My Procurement
+</button>
+
+<button onclick="showPayment()">
+💰 Payment Status
+</button>
+
+<button onclick="showNotifications()">
+🔔 Notifications
+</button>
+
+<button onclick="showProfile()">
+👤 My Profile
+</button>
+
+<div class="logout">
+
+<button onclick="logout()">
+🚪 Logout
+</button>
+
+</div>
+
+</div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+<div class="topbar">
+
+<div>
+
+<h1>
+Good Morning, <span id="greetingName">Farmer</span> 👨‍🌾
+</h1>
+
+<p>
+Here's your procurement overview
+</p>
+
+</div>
+
+<div class="profile">
+
+<div>
+
+<strong>
+<span id="farmerName">Farmer</span>
+</strong>
+
+<small style="display:block;color:#7b857e;">
+Farmer
+</small>
+
+</div>
+
+<div class="avatar">
+<span id="farmerInitials">F</span>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= STAT CARDS ================= -->
+
+<div class="cards">
+
+<div class="card">
+
+<div class="card-icon">🎟️</div>
+
+<small>My Token</small>
+
+<strong>
+<span id="tokenNumber">No Token</span>
+</strong>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-icon">🚶</div>
+
+<small>Queue Position</small>
+
+<strong>
+<span id="cardQueuePosition">-</span>
+</strong>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-icon">⏱️</div>
+
+<small>Estimated Wait</small>
+
+<strong>
+<span id="cardWaitTime">-</span>
+</strong>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-icon">💰</div>
+
+<small>Payment Status</small>
+
+<strong id="paymentCard">
+Pending
+</strong>
+
+</div>
+
+</div>
+
+
+<!-- ================= CONTENT ================= -->
+
+<div class="content-grid">
+
+<!-- ================= BOOKING ================= -->
+
+<div class="panel">
+
+<div class="panel-header">
+
+<h2>📅 Today's Booking</h2>
+
+<a onclick="bookSlot()">
+Book New Slot
+</a>
+
+</div>
+
+
+<div class="booking">
+
+<div class="booking-top">
+
+<div>
+
+<small>
+Procurement Center
+</small>
+
+<h3 id="bookingCenter">
+No booking yet
+</h3>
+
+</div>
+
+<span class="status" id="bookingStatus">
+NO BOOKING
+</span>
+
+</div>
+
+
+<div class="booking-details">
+
+<div>
+
+<small>Date</small>
+
+<strong id="bookingDate">-</strong>
+
+</div>
+
+
+<div>
+
+<small>Time Slot</small>
+
+<strong id="bookingTime">-</strong>
+
+</div>
+
+
+<div>
+
+<small>Crop</small>
+
+<strong id="bookingCrop">-</strong>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= PROGRESS ================= -->
+
+<div class="progress">
+
+<h3>Procurement Progress</h3>
+
+<div class="steps">
+
+<div class="step completed">
+<div class="circle">✓</div>
+Registered
+</div>
+
+<div class="step completed">
+<div class="circle">✓</div>
+Slot Booked
+</div>
+
+<div class="step" id="stepCenter">
+<div class="circle">3</div>
+At Center
+</div>
+
+<div class="step" id="stepVerification">
+<div class="circle">4</div>
+Verification
+</div>
+
+<div class="step" id="stepPayment">
+<div class="circle">5</div>
+Payment
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= QUEUE ================= -->
+
+<div class="panel">
+
+<div class="panel-header">
+
+<h2>🚶 Live Queue</h2>
+
+<span style="color:#16803c;">
+● LIVE
+</span>
+
+</div>
+
+
+<div class="queue">
+
+<p>Your current position</p>
+
+<div
+class="queue-number"
+id="queuePosition">
+-
+</div>
+
+<p>Farmers ahead of you</p>
+
+
+<div class="queue-info">
+
+<div>
+
+<small>Estimated Wait</small>
+
+<strong id="waitTime">-</strong>
+
+</div>
+
+
+<div>
+
+<small>Currently Serving</small>
+
+<strong id="servingToken">
+KUS-000
+</strong>
+
+</div>
+
+</div>
+
+
+<button
+class="book-btn"
+onclick="refreshQueue()">
+
+🔄 Refresh Queue
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+
+<!-- ================= MODAL ================= -->
+
+<div class="modal" id="modal">
+
+<div class="modal-box">
+
+<button class="close" onclick="closeModal()">
+×
+</button>
+
+<div id="modalContent"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* ================= FARMER DATA ================= */
+
+const savedFarmer =
+localStorage.getItem("kisanSetuFarmer");
+
+
+if (!savedFarmer) {
+
+    alert("Please register as a farmer first.");
+
+    window.location.href = "../index.html";
+
+} else {
+
+    const farmer =
+        JSON.parse(savedFarmer);
+
+    document.getElementById("farmerName").innerText =
+        farmer.name;
+
+    document.getElementById("greetingName").innerText =
+        farmer.name.split(" ")[0];
+
+    const words =
+        farmer.name.trim().split(" ");
+
+    let initials = "";
+
+    words.forEach(function(word) {
+
+        if (word.length > 0) {
+
+            initials +=
+                word.charAt(0).toUpperCase();
+
+        }
+
+    });
+
+    document.getElementById("farmerInitials").innerText =
+        initials.substring(0,2);
+
+}
+
+
+/* ================= LOAD BOOKING ================= */
+
+function loadBooking() {
+
+    const savedBooking =
+        localStorage.getItem("kisanSetuBooking");
+
+
+    if (!savedBooking) {
+
+        document.getElementById("tokenNumber")
+            .innerText = "No Token";
+
+        document.getElementById("cardQueuePosition")
+            .innerText = "-";
+
+        document.getElementById("cardWaitTime")
+            .innerText = "-";
+
+        document.getElementById("queuePosition")
+            .innerText = "-";
+
+        document.getElementById("waitTime")
+            .innerText = "-";
+
+        document.getElementById("bookingCenter")
+            .innerText = "No booking yet";
+
+        document.getElementById("bookingDate")
+            .innerText = "-";
+
+        document.getElementById("bookingTime")
+            .innerText = "-";
+
+        document.getElementById("bookingCrop")
+            .innerText = "-";
+
+        document.getElementById("bookingStatus")
+            .innerText = "NO BOOKING";
+
+        document.getElementById("paymentCard")
+            .innerText = "Pending";
+
+        document.getElementById("servingToken")
+            .innerText = "KUS-000";
+
+        resetProgress();
+
+        return;
+    }
+
+
+    const booking =
+        JSON.parse(savedBooking);
+
+
+    /* ================= FIXED DEMO VALUES ================= */
+
+    const token = "KUS-001";
+    const queuePosition = 5;
+    const waitTime = 25;
+
+
+    booking.token = token;
+    booking.queuePosition = queuePosition;
+    booking.waitTime = waitTime;
+
+
+    localStorage.setItem(
+        "kisanSetuBooking",
+        JSON.stringify(booking)
+    );
+
+
+    /* ================= DASHBOARD CARDS ================= */
+
+    document.getElementById("tokenNumber")
+        .innerText = token;
+
+    document.getElementById("cardQueuePosition")
+        .innerText = "#" + queuePosition;
+
+    document.getElementById("cardWaitTime")
+        .innerText = waitTime + " min";
+
+
+    /* ================= QUEUE ================= */
+
+    document.getElementById("queuePosition")
+        .innerText = "#" + queuePosition;
+
+    document.getElementById("waitTime")
+        .innerText = waitTime + " min";
+
+    document.getElementById("servingToken")
+        .innerText = "KUS-000";
+
+
+    /* ================= BOOKING DETAILS ================= */
+
+    document.getElementById("bookingCenter")
+        .innerText = booking.center;
+
+    document.getElementById("bookingDate")
+        .innerText = booking.date;
+
+    document.getElementById("bookingTime")
+        .innerText = booking.time;
+
+    document.getElementById("bookingCrop")
+        .innerText =
+        booking.crop +
+        " • " +
+        booking.quantity +
+        " Qtl";
+
+
+    document.getElementById("bookingStatus")
+        .innerText = booking.status || "CONFIRMED";
+
+    document.getElementById("paymentCard")
+        .innerText = booking.paymentStatus || "Pending";
+
+
+    updateProgress(booking);
+
+}
+
+
+/* ================= RESET PROGRESS ================= */
+
+function resetProgress() {
+
+    const stepCenter =
+        document.getElementById("stepCenter");
+
+    const stepVerification =
+        document.getElementById("stepVerification");
+
+    const stepPayment =
+        document.getElementById("stepPayment");
+
+
+    stepCenter.classList.remove("completed");
+    stepVerification.classList.remove("completed");
+    stepPayment.classList.remove("completed");
+
+
+    stepCenter.querySelector(".circle")
+        .innerText = "3";
+
+    stepVerification.querySelector(".circle")
+        .innerText = "4";
+
+    stepPayment.querySelector(".circle")
+        .innerText = "5";
+
+}
+
+
+/* ================= PROGRESS ================= */
+
+function updateProgress(booking) {
+
+    resetProgress();
+
+
+    /*
+        Demo flow:
+        Registered → Slot Booked → At Center
+        → Verification → Payment
+
+        Booking status CONFIRMED means
+        only the slot is successfully booked.
+    */
+
+
+    if (booking.status === "AT_CENTER") {
+
+        document.getElementById("stepCenter")
+            .classList.add("completed");
+
+        document.getElementById("stepCenter")
+            .querySelector(".circle")
+            .innerText = "✓";
+
+    }
+
+
+    if (
+        booking.status === "VERIFIED" ||
+        booking.status === "PAYMENT_PENDING" ||
+        booking.status === "COMPLETED"
+    ) {
+
+        document.getElementById("stepCenter")
+            .classList.add("completed");
+
+        document.getElementById("stepCenter")
+            .querySelector(".circle")
+            .innerText = "✓";
+
+
+        document.getElementById("stepVerification")
+            .classList.add("completed");
+
+        document.getElementById("stepVerification")
+            .querySelector(".circle")
+            .innerText = "✓";
+
+    }
+
+
+    if (booking.status === "COMPLETED") {
+
+        document.getElementById("stepPayment")
+            .classList.add("completed");
+
+        document.getElementById("stepPayment")
+            .querySelector(".circle")
+            .innerText = "✓";
+
+    }
+
+}
+
+
+/* ================= BOOK SLOT ================= */
+
+function bookSlot() {
+
+    window.location.href =
+        "book-slot.html";
+
+}
+
+
+/* ================= MY TOKEN ================= */
+
+function showToken() {
+
+    const savedBooking =
+        localStorage.getItem("kisanSetuBooking");
+
+
+    if (!savedBooking) {
+
+        showModal(
+
+            "<h2>🎟️ My Token</h2>" +
+
+            "<p>No procurement slot has been booked yet.</p>" +
+
+            "<button class='book-btn' onclick='bookSlot()'>" +
+            "Book Slot" +
+            "</button>"
+
+        );
+
+        return;
+    }
+
+
+    const data =
+        JSON.parse(savedBooking);
+
+
+    const token =
+        data.token || "KUS-001";
+
+    const queue =
+        data.queuePosition || 5;
+
+    const wait =
+        data.waitTime || 25;
+
+
+    showModal(
+
+        "<h2>🎟️ Your Procurement Token</h2>" +
+
+        "<div class='info-row'>" +
+        "<span>Token</span>" +
+        "<strong>" +
+        token +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>Centre</span>" +
+        "<strong>" +
+        data.center +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>Date</span>" +
+        "<strong>" +
+        data.date +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>Time</span>" +
+        "<strong>" +
+        data.time +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>Queue</span>" +
+        "<strong>#"+ queue + "</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>Estimated Wait</span>" +
+        "<strong>" +
+        wait +
+        " min</strong>" +
+        "</div>"
+
+    );
+
+}
+
+
+/* ================= LIVE QUEUE ================= */
+
+function showQueue() {
+
+    document
+        .querySelector(".queue")
+        .scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+}
+
+
+/* ================= REFRESH QUEUE ================= */
+
+function refreshQueue() {
+
+    const saved =
+        localStorage.getItem("kisanSetuBooking");
+
+
+    if (!saved) {
+
+        alert(
+            "Please book a procurement slot first."
+        );
+
+        return;
+
+    }
+
+
+    const booking =
+        JSON.parse(saved);
+
+
+    /* Fixed demo values */
+
+    booking.token = "KUS-001";
+    booking.queuePosition = 5;
+    booking.waitTime = 25;
+
+
+    localStorage.setItem(
+        "kisanSetuBooking",
+        JSON.stringify(booking)
+    );
+
+
+    loadBooking();
+
+
+    alert(
+        "Queue updated!\n\n" +
+        "Your Position: #5\n" +
+        "Estimated Wait: 25 min"
+    );
+
+}
+
+
+/* ================= PROCUREMENT ================= */
+
+function showProcurement() {
+
+    const saved =
+        localStorage.getItem("kisanSetuBooking");
+
+
+    if (!saved) {
+
+        showModal(
+
+            "<h2>📦 My Procurement</h2>" +
+
+            "<p>No procurement booking found.</p>"
+
+        );
+
+        return;
+
+    }
+
+
+    const booking =
+        JSON.parse(saved);
+
+
+    const procurementStatus =
+        booking.procurementStatus ||
+        "At Center";
+
+
+    showModal(
+
+        "<h2>📦 Procurement Status</h2>" +
+
+        "<div class='info-row'>" +
+        "<span>Crop</span>" +
+        "<strong>" +
+        booking.crop +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>Quantity</span>" +
+        "<strong>" +
+        booking.quantity +
+        " Quintals</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>Centre</span>" +
+        "<strong>" +
+        booking.center +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>Status</span>" +
+        "<strong>" +
+        procurementStatus +
+        "</strong>" +
+        "</div>"
+
+    );
+
+}
+
+
+/* ================= PAYMENT ================= */
+
+function showPayment() {
+
+    const saved =
+        localStorage.getItem("kisanSetuBooking");
+
+
+    if (!saved) {
+
+        showModal(
+
+            "<h2>💰 Payment Status</h2>" +
+
+            "<p>No procurement booking found.</p>"
+
+        );
+
+        return;
+
+    }
+
+
+    const booking =
+        JSON.parse(saved);
+
+
+    const paymentStatus =
+        booking.paymentStatus ||
+        "Pending";
+
+
+    showModal(
+
+        "<h2>💰 Payment Status</h2>" +
+
+        "<div class='info-row'>" +
+        "<span>Crop</span>" +
+        "<strong>" +
+        booking.crop +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>Quantity</span>" +
+        "<strong>" +
+        booking.quantity +
+        " Quintals</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>Status</span>" +
+        "<strong>" +
+        paymentStatus +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='notification'>" +
+        "Payment will be processed after procurement verification." +
+        "</div>"
+
+    );
+
+}
+
+
+/* ================= NOTIFICATIONS ================= */
+
+function showNotifications() {
+
+    showModal(
+
+        "<h2>🔔 Notifications</h2>" +
+
+        "<div class='notification'>" +
+        "✅ Your farmer account is active." +
+        "</div>" +
+
+        "<div class='notification'>" +
+        "📅 Book your procurement slot before visiting the centre." +
+        "</div>" +
+
+        "<div class='notification'>" +
+        "🚶 Live queue information is available on your dashboard." +
+        "</div>"
+
+    );
+
+}
+
+
+/* ================= PROFILE ================= */
+
+function showProfile() {
+
+    const saved =
+        localStorage.getItem("kisanSetuFarmer");
+
+
+    if (!saved) {
+
+        showModal(
+
+            "<h2>👤 My Profile</h2>" +
+
+            "<p>Farmer profile not found.</p>"
+
+        );
+
+        return;
+
+    }
+
+
+    const farmer =
+        JSON.parse(saved);
+
+
+    showModal(
+
+        "<h2>👤 My Profile</h2>" +
+
+        "<div class='info-row'>" +
+        "<span>Name</span>" +
+        "<strong>" +
+        farmer.name +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>Mobile</span>" +
+        "<strong>" +
+        farmer.mobile +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>Farmer ID</span>" +
+        "<strong>" +
+        farmer.farmerId +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>Village</span>" +
+        "<strong>" +
+        farmer.village +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>District</span>" +
+        "<strong>" +
+        farmer.district +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>State</span>" +
+        "<strong>" +
+        farmer.state +
+        "</strong>" +
+        "</div>" +
+
+        "<div class='info-row'>" +
+        "<span>Main Crop</span>" +
+        "<strong>" +
+        farmer.crop +
+        "</strong>" +
+        "</div>"
+
+    );
+
+}
+
+
+/* ================= MODAL ================= */
+
+function showModal(content) {
+
+    document.getElementById("modalContent")
+        .innerHTML = content;
+
+    document.getElementById("modal")
+        .style.display = "flex";
+
+}
+
+
+function closeModal() {
+
+    document.getElementById("modal")
+        .style.display = "none";
+
+}
+
+
+/* ================= LOGOUT ================= */
+
+function logout() {
+
+    localStorage.removeItem(
+        "kisanSetuLoggedIn"
+    );
+
+    window.location.href =
+        "../index.html";
+
+}
+
+
+/* ================= INITIALIZE ================= */
+
+loadBooking();
+
+
+/* ================= CLOSE MODAL ================= */
+
+window.onclick = function(event) {
+
+    const modal =
+        document.getElementById("modal");
+
+    if (event.target === modal) {
+
+        closeModal();
+
+    }
+
+};
+
+</script>
+
+</body>
+
+</html>
