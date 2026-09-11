@@ -1,0 +1,889 @@
+from fastapi import FastAPI, HTTPException, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
+from pydantic import BaseModel, EmailStr
+from sqlalchemy import (
+    create_engine,
+    Column,
+    Integer,
+    String,
+    Float,
+    ForeignKey,
+)
+from sqlalchemy.orm import declarative_base, sessionmaker, relationship, Session
+
+from jose import jwt, JWTError
+from uuid import uuid4
+import hashlib
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+
+# =========================================================
+# APP CONFIGURATION
+# =========================================================
+
+app = FastAPI(
+    title="Kisan Upaj Setu API",
+    description="Smart Procurement System for Farmers",
+    version="1.0.0",
+)
+
+
+# =========================================================
+# CORS
+# =========================================================
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+# =========================================================
+# DATABASE
+# =========================================================
+
+
+# IMPORTANT:
+# Keep your existing PostgreSQL password in this line.
+# Do not share your password publicly.
+
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    f"postgresql+psycopg://postgres:{os.getenv('DB_PASSWORD')}@localhost:5432/farmer_procurement",
+)
+
+
+
+engine = create_engine(
+    DATABASE_URL,
+)
+
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine,
+)
+
+Base = declarative_base()
+
+
+def get_db():
+    db = SessionLocal()
+
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+# =========================================================
+# SECURITY
+# =========================================================
+
+SECRET_KEY = os.getenv(
+    "SECRET_KEY",
+    "KISAN_UPAJ_SETU_CHANGE_THIS_SECRET_KEY",
+)
+
+ALGORITHM = "HS256"
+
+security = HTTPBearer()
+
+
+def hash_password(password: str) -> str:
+    return hashlib.sha256(
+        password.encode("utf-8")
+    ).hexdigest()
+
+
+def create_token(user_id: int) -> str:
+    return jwt.encode(
+        {"sub": str(user_id)},
+        SECRET_KEY,
+        algorithm=ALGORITHM,
+    )
+
+
+# =========================================================
+# DATABASE MODELS
+# =========================================================
+
+class User(Base):
+
+    __tablename__ = "users"
+
+    id = Column(
+        Integer,
+        primary_key=True,
+    )
+
+    name = Column(
+        String(100),
+        nullable=False,
+    )
+
+    phone = Column(
+        String(15),
+        unique=True,
+        nullable=False,
+    )
+
+    email = Column(
+        String(255),
+        unique=True,
+        nullable=True,
+    )
+
+    password = Column(
+        String(255),
+        nullable=False,
+    )
+
+    role = Column(
+        String(50),
+        default="farmer",
+    )
+
+    bookings = relationship(
+        "Booking",
+        back_populates="farmer",
+    )
+
+
+class ProcurementCenter(Base):
+
+    __tablename__ = "procurement_centers"
+
+    id = Column(
+        Integer,
+        primary_key=True,
+    )
+
+    name = Column(
+        String(100),
+        nullable=False,
+    )
+
+    district = Column(
+        String(100),
+        nullable=False,
+    )
+
+    state = Column(
+        String(100),
+        nullable=False,
+    )
+
+    address = Column(
+        String(255),
+    )
+
+    slots = relationship(
+        "ProcurementSlot",
+        back_populates="center",
+    )
+
+
+class ProcurementSlot(Base):
+
+    __tablename__ = "procurement_slots"
+
+    id = Column(
+        Integer,
+        primary_key=True,
+    )
+
+    center_id = Column(
+        Integer,
+        ForeignKey("procurement_centers.id"),
+        nullable=False,
+    )
+
+    crop_name = Column(
+        String(100),
+        nullable=False,
+    )
+
+    procurement_date = Column(
+        String(50),
+        nullable=False,
+    )
+
+    start_time = Column(
+        String(20),
+        nullable=False,
+    )
+
+    end_time = Column(
+        String(20),
+        nullable=False,
+    )
+
+    capacity = Column(
+        Integer,
+        default=20,
+    )
+
+    booked_count = Column(
+        Integer,
+        default=0,
+    )
+
+    center = relationship(
+        "ProcurementCenter",
+        back_populates="slots",
+    )
+
+    bookings = relationship(
+        "Booking",
+        back_populates="slot",
+    )
+
+
+class Booking(Base):
+
+    __tablename__ = "bookings"
+
+    id = Column(
+        Integer,
+        primary_key=True,
+    )
+
+    booking_code = Column(
+        String(50),
+        unique=True,
+    )
+
+    farmer_id = Column(
+        Integer,
+        ForeignKey("users.id"),
+        nullable=False,
+    )
+
+    slot_id = Column(
+        Integer,
+        ForeignKey("procurement_slots.id"),
+        nullable=False,
+    )
+
+    quantity_quintal = Column(
+        Float,
+        nullable=False,
+    )
+
+    status = Column(
+        String(50),
+        default="Confirmed",
+    )
+
+    payment_status = Column(
+        String(50),
+        default="Pending",
+    )
+
+    payment_amount = Column(
+        Float,
+        default=0,
+    )
+
+    farmer = relationship(
+        "User",
+        back_populates="bookings",
+    )
+
+    slot = relationship(
+        "ProcurementSlot",
+        back_populates="bookings",
+    )
+
+
+# =========================================================
+# CREATE TABLES
+# =========================================================
+
+Base.metadata.create_all(
+    bind=engine
+)
+
+
+# =========================================================
+# PYDANTIC REQUEST MODELS
+# =========================================================
+
+class RegisterRequest(BaseModel):
+
+    name: str
+    phone: str
+    email: EmailStr | None = None
+    password: str
+
+
+class LoginRequest(BaseModel):
+
+    phone: str
+    password: str
+
+
+class CenterRequest(BaseModel):
+
+    name: str
+    district: str
+    state: str
+    address: str
+
+
+class SlotRequest(BaseModel):
+
+    center_id: int
+    crop_name: str
+    procurement_date: str
+    start_time: str
+    end_time: str
+    capacity: int
+
+
+class BookingRequest(BaseModel):
+
+    slot_id: int
+    quantity_quintal: float
+
+
+# =========================================================
+# CURRENT USER
+# =========================================================
+
+def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: Session = Depends(get_db),
+):
+
+    token = credentials.credentials
+
+    try:
+
+        payload = jwt.decode(
+            token,
+            SECRET_KEY,
+            algorithms=[ALGORITHM],
+        )
+
+        user_id_value = payload.get("sub")
+
+        if user_id_value is None:
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid token",
+            )
+
+        user_id = int(user_id_value)
+
+    except (JWTError, ValueError, TypeError):
+
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid token",
+        )
+
+    user = db.query(User).filter(
+        User.id == user_id
+    ).first()
+
+    if not user:
+
+        raise HTTPException(
+            status_code=401,
+            detail="User not found",
+        )
+
+    return user
+
+
+# =========================================================
+# HOME API
+# =========================================================
+
+@app.get("/")
+def home():
+
+    return {
+        "message": "Welcome to Kisan Upaj Setu API",
+        "status": "Running",
+    }
+
+
+# =========================================================
+# REGISTER FARMER
+# =========================================================
+
+@app.post("/auth/register")
+def register_user(
+    data: RegisterRequest,
+    db: Session = Depends(get_db),
+):
+
+    existing_user = db.query(User).filter(
+        User.phone == data.phone
+    ).first()
+
+    if existing_user:
+
+        raise HTTPException(
+            status_code=400,
+            detail="Phone number already registered",
+        )
+
+    if data.email:
+
+        existing_email = db.query(User).filter(
+            User.email == data.email
+        ).first()
+
+        if existing_email:
+
+            raise HTTPException(
+                status_code=400,
+                detail="Email already registered",
+            )
+
+    user = User(
+        name=data.name,
+        phone=data.phone,
+        email=data.email,
+        password=hash_password(data.password),
+        role="farmer",
+    )
+
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    token = create_token(user.id)
+
+    return {
+        "message": "Farmer registered successfully",
+        "access_token": token,
+        "user": {
+            "id": user.id,
+            "name": user.name,
+            "phone": user.phone,
+            "role": user.role,
+        },
+    }
+
+
+# =========================================================
+# LOGIN
+# =========================================================
+
+@app.post("/auth/login")
+def login(
+    data: LoginRequest,
+    db: Session = Depends(get_db),
+):
+
+    user = db.query(User).filter(
+        User.phone == data.phone
+    ).first()
+
+    if not user:
+
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid phone number or password",
+        )
+
+    if user.password != hash_password(data.password):
+
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid phone number or password",
+        )
+
+    token = create_token(user.id)
+
+    return {
+        "message": "Login successful",
+        "access_token": token,
+        "user": {
+            "id": user.id,
+            "name": user.name,
+            "role": user.role,
+        },
+    }
+
+
+# =========================================================
+# GET PROCUREMENT CENTERS
+# =========================================================
+
+@app.get("/centers")
+def get_centers(
+    db: Session = Depends(get_db),
+):
+
+    centers = db.query(
+        ProcurementCenter
+    ).all()
+
+    return centers
+
+
+# =========================================================
+# CREATE PROCUREMENT CENTER
+# =========================================================
+# NOTE:
+# This endpoint is kept for the current prototype.
+# Later Admin API will handle admin-only center creation.
+
+@app.post("/centers")
+def create_center(
+    data: CenterRequest,
+    db: Session = Depends(get_db),
+):
+
+    center = ProcurementCenter(
+        name=data.name,
+        district=data.district,
+        state=data.state,
+        address=data.address,
+    )
+
+    db.add(center)
+    db.commit()
+    db.refresh(center)
+
+    return {
+        "message": "Procurement center created",
+        "center_id": center.id,
+    }
+
+
+# =========================================================
+# GET PROCUREMENT SLOTS
+# =========================================================
+
+@app.get("/slots")
+def get_slots(
+    center_id: int | None = None,
+    db: Session = Depends(get_db),
+):
+
+    query = db.query(ProcurementSlot)
+
+    if center_id is not None:
+
+        query = query.filter(
+            ProcurementSlot.center_id == center_id
+        )
+
+    slots = query.all()
+
+    result = []
+
+    for slot in slots:
+
+        result.append({
+            "id": slot.id,
+            "center_name": slot.center.name,
+            "crop_name": slot.crop_name,
+            "date": slot.procurement_date,
+            "start_time": slot.start_time,
+            "end_time": slot.end_time,
+            "capacity": slot.capacity,
+            "booked": slot.booked_count,
+            "available": max(
+                0,
+                slot.capacity - slot.booked_count
+            ),
+        })
+
+    return result
+
+
+# =========================================================
+# CREATE PROCUREMENT SLOT
+# =========================================================
+# NOTE:
+# This endpoint is kept for the current prototype.
+# Later Admin API will handle admin-only slot creation.
+
+@app.post("/slots")
+def create_slot(
+    data: SlotRequest,
+    db: Session = Depends(get_db),
+):
+
+    if data.capacity <= 0:
+
+        raise HTTPException(
+            status_code=400,
+            detail="Capacity must be greater than 0",
+        )
+
+    center = db.query(
+        ProcurementCenter
+    ).filter(
+        ProcurementCenter.id == data.center_id
+    ).first()
+
+    if not center:
+
+        raise HTTPException(
+            status_code=404,
+            detail="Procurement center not found",
+        )
+
+    slot = ProcurementSlot(
+        center_id=data.center_id,
+        crop_name=data.crop_name,
+        procurement_date=data.procurement_date,
+        start_time=data.start_time,
+        end_time=data.end_time,
+        capacity=data.capacity,
+        booked_count=0,
+    )
+
+    db.add(slot)
+    db.commit()
+    db.refresh(slot)
+
+    return {
+        "message": "Slot created successfully",
+        "slot_id": slot.id,
+    }
+
+
+# =========================================================
+# BOOK PROCUREMENT SLOT
+# =========================================================
+
+@app.post("/bookings")
+def book_slot(
+    data: BookingRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+
+    if data.quantity_quintal <= 0:
+
+        raise HTTPException(
+            status_code=400,
+            detail="Quantity must be greater than 0",
+        )
+
+    slot = db.query(
+        ProcurementSlot
+    ).filter(
+        ProcurementSlot.id == data.slot_id
+    ).first()
+
+    if not slot:
+
+        raise HTTPException(
+            status_code=404,
+            detail="Slot not found",
+        )
+
+    if slot.booked_count >= slot.capacity:
+
+        raise HTTPException(
+            status_code=400,
+            detail="This slot is already full",
+        )
+
+    booking = Booking(
+        booking_code=f"KUS-{uuid4().hex[:8].upper()}",
+        farmer_id=current_user.id,
+        slot_id=data.slot_id,
+        quantity_quintal=data.quantity_quintal,
+        status="Confirmed",
+        payment_status="Pending",
+        payment_amount=0,
+    )
+
+    slot.booked_count += 1
+
+    db.add(booking)
+    db.commit()
+    db.refresh(booking)
+
+    return {
+        "message": "Procurement slot booked successfully",
+        "booking_id": booking.id,
+        "booking_code": booking.booking_code,
+        "status": booking.status,
+    }
+
+
+# =========================================================
+# GET MY BOOKINGS
+# =========================================================
+
+@app.get("/bookings/my")
+def my_bookings(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+
+    bookings = db.query(
+        Booking
+    ).filter(
+        Booking.farmer_id == current_user.id
+    ).all()
+
+    result = []
+
+    for booking in bookings:
+
+        # Get all bookings for the same slot
+        same_slot_bookings = db.query(
+            Booking
+        ).filter(
+            Booking.slot_id == booking.slot_id
+        ).order_by(
+            Booking.id.asc()
+        ).all()
+
+
+        # Find this farmer's position in that slot
+        queue_position = 1
+
+        for other_booking in same_slot_bookings:
+
+            if other_booking.id == booking.id:
+                break
+
+            queue_position += 1
+
+
+        # Approx. 15 minutes per farmer ahead
+        estimated_wait = (
+            queue_position - 1
+        ) * 15
+
+
+        result.append({
+
+            "booking_code":
+            booking.booking_code,
+
+            "crop":
+            booking.slot.crop_name,
+
+            "center":
+            booking.slot.center.name,
+
+            "date":
+            booking.slot.procurement_date,
+
+            "time":
+            booking.slot.start_time,
+
+            "quantity":
+            booking.quantity_quintal,
+
+            "status":
+            booking.status,
+
+            "payment_status":
+            booking.payment_status,
+
+            "queue_position":
+            queue_position,
+
+            "estimated_wait":
+            estimated_wait
+
+        })
+
+
+    return result
+
+# =========================================================
+# FARMER PROFILE
+# =========================================================
+
+@app.get("/profile")
+def farmer_profile(
+    current_user: User = Depends(get_current_user)
+):
+    return {
+        "id": current_user.id,
+        "name": current_user.name,
+        "phone": current_user.phone,
+        "email": current_user.email,
+        "role": current_user.role
+    }
+
+
+# =========================================================
+# FARMER DASHBOARD
+# =========================================================
+
+@app.get("/dashboard")
+def farmer_dashboard(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+
+    bookings = db.query(
+        Booking
+    ).filter(
+        Booking.farmer_id == current_user.id
+    ).all()
+
+    total_quantity = sum(
+        (booking.quantity_quintal or 0)
+        for booking in bookings
+    )
+
+    confirmed = sum(
+        1
+        for booking in bookings
+        if booking.status == "Confirmed"
+    )
+
+    next_slot = None
+
+    if bookings:
+
+        booking = bookings[-1]
+
+        next_slot = {
+            "crop": booking.slot.crop_name,
+            "center": booking.slot.center.name,
+            "date": booking.slot.procurement_date,
+            "time": booking.slot.start_time,
+        }
+
+    return {
+        "farmer_name": current_user.name,
+        "total_bookings": len(bookings),
+        "confirmed_bookings": confirmed,
+        "total_quantity_quintals": total_quantity,
+        "next_procurement": next_slot,
+    }
+
+
+# =========================================================
+# HEALTH CHECK
+# =========================================================
+
+@app.get("/health")
+def health():
+
+    return {
+        "status": "healthy",
+
+        "project": "Kisan Upaj Setu"
+
+    }

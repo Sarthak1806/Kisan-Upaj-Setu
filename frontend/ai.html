@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kisan AI Assistant | Kisan Upaj Setu</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8f4;
+            color: #19351f;
+            min-height: 100vh;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            background: #123d1e;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #16803c;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .logo h2 {
+            font-size: 20px;
+        }
+
+        .logo small {
+            color: #c8dfcd;
+            font-size: 11px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #a9e2b7;
+        }
+
+        .home-btn {
+            background: white;
+            color: #176b32 !important;
+            padding: 9px 16px;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            color: #176b32;
+            font-size: 32px;
+        }
+
+        .heading p {
+            margin-top: 8px;
+            color: #78847b;
+            font-size: 14px;
+        }
+
+        /* ================= AI CARD ================= */
+
+        .ai-card {
+            background: white;
+            border: 1px solid #e0e8e1;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(20,70,30,0.07);
+            overflow: hidden;
+        }
+
+        .ai-header {
+            background: #eef8ef;
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #dce8dd;
+        }
+
+        .ai-icon {
+            width: 50px;
+            height: 50px;
+            background: #16803c;
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+
+        .ai-header h2 {
+            color: #176b32;
+            font-size: 20px;
+        }
+
+        .ai-header p {
+            color: #78847b;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .status {
+            margin-left: auto;
+            font-size: 12px;
+            color: #16803c;
+            font-weight: bold;
+        }
+
+        /* ================= CHAT ================= */
+
+        .chat-box {
+            height: 430px;
+            padding: 25px;
+            overflow-y: auto;
+            background: #fbfdfb;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 18px;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .bubble {
+            max-width: 75%;
+            padding: 13px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .message.ai .bubble {
+            background: #eef8ef;
+            color: #29452f;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.user .bubble {
+            background: #16803c;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        /* ================= SUGGESTIONS ================= */
+
+        .suggestions {
+            padding: 15px 25px;
+            border-top: 1px solid #e3ebe4;
+            background: white;
+        }
+
+        .suggestions p {
+            font-size: 12px;
+            color: #78847b;
+            margin-bottom: 10px;
+        }
+
+        .suggestion-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .suggestion-btn {
+            border: 1px solid #cfe0d1;
+            background: #f7fbf7;
+            color: #176b32;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .suggestion-btn:hover {
+            background: #eef8ef;
+        }
+
+        /* ================= INPUT ================= */
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            padding: 18px 25px;
+            border-top: 1px solid #e0e8e1;
+            background: white;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 13px 15px;
+            border: 1px solid #d7e2d8;
+            border-radius: 9px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .input-area input:focus {
+            border-color: #16803c;
+            box-shadow: 0 0 0 3px rgba(22,128,60,0.08);
+        }
+
+        .send-btn {
+            border: none;
+            background: #16803c;
+            color: white;
+            padding: 0 22px;
+            border-radius: 9px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .send-btn:hover {
+            background: #126a31;
+        }
+
+        /* ================= INFO ================= */
+
+        .info-box {
+            margin-top: 20px;
+            background: #fff9e8;
+            padding: 15px;
+            border-radius: 10px;
+            color: #6b5a2d;
+            font-size: 13px;
+        }
+
+        /* ================= BACK ================= */
+
+        .back {
+            display: inline-block;
+            margin-top: 18px;
+            color: #16803c;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width: 700px) {
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-links a:not(.home-btn) {
+                display: none;
+            }
+
+            .container {
+                margin: 25px auto;
+            }
+
+            .heading h1 {
+                font-size: 27px;
+            }
+
+            .chat-box {
+                height: 380px;
+            }
+
+            .bubble {
+                max-width: 88%;
+            }
+
+            .input-area {
+                padding: 15px;
+            }
+
+            .send-btn {
+                padding: 0 16px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🌾
+        </div>
+
+        <div>
+
+            <h2>Kisan Upaj Setu</h2>
+
+            <small>
+                Smart Farmer Procurement Platform
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="book-slot.html">
+            Book Slot
+        </a>
+
+        <a href="index.html" class="home-btn">
+            ← Home
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+
+    <div class="heading">
+
+        <h1>🤖 Kisan AI Assistant</h1>
+
+        <p>
+            Get quick help about procurement, slots, tokens,
+            queue and basic farming information.
+        </p>
+
+    </div>
+
+
+    <!-- ================= AI CARD ================= -->
+
+    <div class="ai-card">
+
+
+        <!-- AI HEADER -->
+
+        <div class="ai-header">
+
+            <div class="ai-icon">
+                🤖
+            </div>
+
+            <div>
+
+                <h2>
+                    Kisan AI Assistant
+                </h2>
+
+                <p>
+                    Your smart farming & procurement helper
+                </p>
+
+            </div>
+
+            <div class="status">
+                ● Online
+            </div>
+
+        </div>
+
+
+        <!-- ================= CHAT ================= -->
+
+        <div
+            class="chat-box"
+            id="chatBox"
+        >
+
+            <div class="message ai">
+
+                <div class="bubble">
+
+                    Namaste! 🙏<br><br>
+
+                    Main <strong>Kisan AI Assistant</strong> hoon.
+                    Aap mujhse procurement, slot booking,
+                    token, queue, payment ya farming se
+                    related questions pooch sakte hain.
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= SUGGESTIONS ================= -->
+
+        <div class="suggestions">
+
+            <p>
+                Quick Questions:
+            </p>
+
+            <div class="suggestion-buttons">
+
+                <button
+                    class="suggestion-btn"
+                    onclick="quickQuestion('How can I book a procurement slot?')"
+                >
+                    📅 Book Slot
+                </button>
+
+                <button
+                    class="suggestion-btn"
+                    onclick="quickQuestion('What is my token?')"
+                >
+                    🎟️ Token
+                </button>
+
+                <button
+                    class="suggestion-btn"
+                    onclick="quickQuestion('How does the queue work?')"
+                >
+                    👥 Queue
+                </button>
+
+                <button
+                    class="suggestion-btn"
+                    onclick="quickQuestion('Tell me about payment status')"
+                >
+                    💰 Payment
+                </button>
+
+                <button
+                    class="suggestion-btn"
+                    onclick="quickQuestion('Give me a farming tip')"
+                >
+                    🌱 Farming Tip
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= INPUT ================= -->
+
+        <div class="input-area">
+
+            <input
+                type="text"
+                id="messageInput"
+                placeholder="Ask your question..."
+                autocomplete="off"
+            >
+
+            <button
+                class="send-btn"
+                onclick="sendMessage()"
+            >
+                Send →
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= INFO ================= -->
+
+    <div class="info-box">
+
+        💡 <strong>Tip:</strong>
+        You can ask questions in simple English or Hindi.
+        For example: "Slot kaise book karu?" or
+        "Mera token kya hai?"
+
+    </div>
+
+
+    <a
+        href="dashboard.html"
+        class="back"
+    >
+        ← Back to Dashboard
+    </a>
+
+
+</div>
+
+
+<script>
+
+    /* ================= ADD MESSAGE ================= */
+
+    function addMessage(message, type) {
+
+        const chatBox =
+            document.getElementById("chatBox");
+
+        const messageDiv =
+            document.createElement("div");
+
+        messageDiv.className =
+            "message " + type;
+
+        const bubble =
+            document.createElement("div");
+
+        bubble.className =
+            "bubble";
+
+        bubble.innerHTML =
+            message;
+
+        messageDiv.appendChild(bubble);
+
+        chatBox.appendChild(messageDiv);
+
+        chatBox.scrollTop =
+            chatBox.scrollHeight;
+    }
+
+
+    /* ================= AI DEMO RESPONSE ================= */
+
+    function getDemoResponse(message) {
+
+        const text =
+            message.toLowerCase();
+
+
+        if (
+            text.includes("hello") ||
+            text.includes("hi") ||
+            text.includes("namaste")
+        ) {
+
+            return "Namaste! 🙏 Main Kisan AI Assistant hoon. Aap procurement, slot booking, token, queue, payment ya farming ke baare mein pooch sakte hain.";
+
+        }
+
+
+        if (
+            text.includes("slot") ||
+            text.includes("booking") ||
+            text.includes("book")
+        ) {
+
+            return "Procurement slot book karne ke liye Dashboard se <strong>Book Slot</strong> option open karein. Centre, crop, quantity, date aur time select karke slot confirm karein.";
+
+        }
+
+
+        if (
+            text.includes("token")
+        ) {
+
+            return "Booking ke baad aapka token Dashboard par show hoga. Token aapko procurement centre par queue mein identify karne mein help karega.";
+
+        }
+
+
+        if (
+            text.includes("queue") ||
+            text.includes("wait") ||
+            text.includes("waiting")
+        ) {
+
+            return "Queue position ke basis par estimated waiting time calculate kiya ja sakta hai. Aap Dashboard par apni current queue position aur estimated wait dekh sakte hain.";
+
+        }
+
+
+        if (
+            text.includes("payment") ||
+            text.includes("paisa")
+        ) {
+
+            return "Payment status aap Dashboard ke payment section mein check kar sakte hain. Booking ke baad payment status initially Pending ho sakta hai.";
+
+        }
+
+
+        if (
+            text.includes("wheat") ||
+            text.includes("gehun")
+        ) {
+
+            return "Gehun ki quality maintain karne ke liye crop ko properly dry aur clean storage mein rakhein. Procurement se pehle centre ki quality requirements check karein.";
+
+        }
+
+
+        if (
+            text.includes("rice") ||
+            text.includes("chawal") ||
+            text.includes("dhan")
+        ) {
+
+            return "Dhaan/chawal ke liye moisture aur quality requirements important hoti hain. Procurement centre par jaane se pehle crop quality aur required documents check karein.";
+
+        }
+
+
+        if (
+            text.includes("farm") ||
+            text.includes("farming") ||
+            text.includes("kheti") ||
+            text.includes("crop") ||
+            text.includes("fasal")
+        ) {
+
+            return "Kheti ke liye soil condition, irrigation aur crop season ka dhyan rakhein. Fertilizer ya pesticide ka use local agricultural guidance ke according karein.";
+
+        }
+
+
+        return "Main aapki procurement slot booking, token, queue, payment aur basic farming questions mein help kar sakta hoon. Aap apna question simple Hindi ya English mein pooch sakte hain.";
+
+    }
+
+
+    /* ================= SEND MESSAGE ================= */
+
+    function sendMessage() {
+
+        const input =
+            document.getElementById("messageInput");
+
+        const message =
+            input.value.trim();
+
+
+        if (!message) {
+
+            return;
+
+        }
+
+
+        addMessage(
+            message,
+            "user"
+        );
+
+
+        input.value = "";
+
+
+        /* Demo thinking message */
+
+        setTimeout(function() {
+
+            const response =
+                getDemoResponse(message);
+
+            addMessage(
+                response,
+                "ai"
+            );
+
+        }, 500);
+
+    }
+
+
+    /* ================= QUICK QUESTION ================= */
+
+    function quickQuestion(question) {
+
+        document.getElementById("messageInput").value =
+            question;
+
+        sendMessage();
+
+    }
+
+
+    /* ================= ENTER TO SEND ================= */
+
+    document
+        .getElementById("messageInput")
+        .addEventListener(
+            "keydown",
+            function(event) {
+
+                if (event.key === "Enter") {
+
+                    sendMessage();
+
+                }
+
+            }
+        );
+
+</script>
+
+</body>
+</html>

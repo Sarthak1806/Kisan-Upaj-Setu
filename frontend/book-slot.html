@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Book Procurement Slot | Kisan Upaj Setu</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8f4;
+            color: #19351f;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #123d1e;
+            color: white;
+            padding: 22px 7%;
+        }
+
+        .header h2 {
+            color: white;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e0e8e1;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(20, 70, 30, 0.06);
+        }
+
+        .title {
+            margin-bottom: 25px;
+        }
+
+        .title h1 {
+            color: #176b32;
+        }
+
+        .title p {
+            margin-top: 7px;
+            color: #78847b;
+        }
+
+        .farmer-box {
+            background: #eef8ef;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .farmer-box strong {
+            color: #176b32;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #46554b;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d7e2d8;
+            border-radius: 8px;
+            outline: none;
+            background: white;
+            transition: 0.2s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #16803c;
+            box-shadow: 0 0 0 3px rgba(22, 128, 60, 0.08);
+        }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #16803c;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #126a31;
+            transform: translateY(-1px);
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 18px;
+            color: #16803c;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff9e8;
+            border-radius: 10px;
+            font-size: 13px;
+            color: #6b5a2d;
+        }
+
+        .note {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #7b847d;
+        }
+
+        @media(max-width:600px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .container {
+                margin: 25px auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h2>🌾 Kisan Upaj Setu</h2>
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="title">
+            <h1>📅 Book Procurement Slot</h1>
+
+            <p>
+                Select a procurement centre, crop and convenient time slot.
+            </p>
+        </div>
+
+        <div class="farmer-box">
+            Farmer:
+            <strong>Registered Farmer</strong>
+
+            <div class="note">
+                Please enter your details below to book a procurement slot.
+            </div>
+        </div>
+
+        <form id="slotForm">
+
+            <div class="grid">
+
+                <div class="field full">
+                    <label for="center">Procurement Centre</label>
+
+                    <select id="center" required>
+
+                        <option value="">
+                            Select Procurement Centre
+                        </option>
+
+                        <option value="Greenfield Procurement Center">
+                            Greenfield Procurement Center
+                        </option>
+
+                        <option value="Kisan Seva Center">
+                            Kisan Seva Center
+                        </option>
+
+                        <option value="Government Grain Center">
+                            Government Grain Center
+                        </option>
+
+                    </select>
+                </div>
+
+
+                <div class="field">
+
+                    <label for="crop">Crop</label>
+
+                    <select id="crop" required>
+
+                        <option value="">
+                            Select Crop
+                        </option>
+
+                        <option value="Wheat">Wheat</option>
+                        <option value="Rice">Rice</option>
+                        <option value="Maize">Maize</option>
+                        <option value="Paddy">Paddy</option>
+                        <option value="Mustard">Mustard</option>
+                        <option value="Cotton">Cotton</option>
+                        <option value="Soybean">Soybean</option>
+                        <option value="Other">Other</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="quantity">Quantity (Quintals)</label>
+
+                    <input
+                        type="number"
+                        id="quantity"
+                        min="1"
+                        step="0.1"
+                        placeholder="Enter quantity"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+    
+                    <label for="date">Procurement Date</label>
+
+                    <select id="date" required>
+                        <option value="">
+                            Select Procurement Date
+                        </option>
+                    </select>
+                </div>
+
+
+                <div class="field">
+    
+                    <label for="time">Time Slot</label>
+
+                    <select id="time" required>
+                        <option value="">
+                            Select Time Slot
+                        </option>
+                    </select>
+                </div>
+
+
+            <div class="info">
+
+                💡 Tip: Booking a slot helps reduce waiting time
+                at the procurement centre.
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="submit-btn">
+
+                Confirm Procurement Slot →
+
+            </button>
+
+        </form>
+
+
+        <a href="dashboard.html" class="back">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ================= LOAD AVAILABLE SLOTS ================= */
+
+let allSlots = [];
+
+const centerSelect =
+    document.getElementById("center");
+
+const cropSelect =
+    document.getElementById("crop");
+
+const dateSelect =
+    document.getElementById("date");
+
+const timeSelect =
+    document.getElementById("time");
+
+
+async function loadSlots() {
+
+    try {
+
+        const response =
+            await fetch(
+                "http://127.0.0.1:8000/slots"
+            );
+
+        const slots =
+            await response.json();
+
+        if (!response.ok) {
+
+            alert("Unable to load procurement slots.");
+            return;
+        }
+
+        /*
+         * Only keep slots that actually exist
+         * and still have available capacity.
+         */
+        allSlots =
+            slots.filter(function(slot) {
+                return slot.available > 0;
+            });
+
+
+        /* ================= LOAD CENTRES ================= */
+
+        const centres = [];
+
+        allSlots.forEach(function(slot) {
+
+            if (!centres.includes(slot.center_name)) {
+                centres.push(slot.center_name);
+            }
+
+        });
+
+
+        centerSelect.innerHTML =
+            '<option value="">Select Procurement Centre</option>';
+
+
+        centres.forEach(function(center) {
+
+            const option =
+                document.createElement("option");
+
+            option.value = center;
+            option.innerText = center;
+
+            centerSelect.appendChild(option);
+
+        });
+
+
+        /* Reset dependent fields */
+
+        cropSelect.innerHTML =
+            '<option value="">Select Crop</option>';
+
+        dateSelect.innerHTML =
+            '<option value="">Select Procurement Date</option>';
+
+        timeSelect.innerHTML =
+            '<option value="">Select Time Slot</option>';
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to connect to the server.\n" +
+            "Please make sure the backend is running."
+        );
+    }
+}
+
+
+/* ================= LOAD CROPS ================= */
+
+centerSelect.addEventListener(
+    "change",
+    function() {
+
+        const center =
+            centerSelect.value;
+
+
+        cropSelect.innerHTML =
+            '<option value="">Select Crop</option>';
+
+        dateSelect.innerHTML =
+            '<option value="">Select Procurement Date</option>';
+
+        timeSelect.innerHTML =
+            '<option value="">Select Time Slot</option>';
+
+
+        if (!center) {
+            return;
+        }
+
+
+        const crops = [];
+
+
+        allSlots.forEach(function(slot) {
+
+            if (
+                slot.center_name === center &&
+                !crops.includes(slot.crop_name)
+            ) {
+                crops.push(slot.crop_name);
+            }
+
+        });
+
+
+        crops.forEach(function(crop) {
+
+            const option =
+                document.createElement("option");
+
+            option.value = crop;
+            option.innerText = crop;
+
+            cropSelect.appendChild(option);
+
+        });
+
+    }
+);
+
+
+/* ================= LOAD DATES ================= */
+
+cropSelect.addEventListener(
+    "change",
+    function() {
+
+        const center =
+            centerSelect.value;
+
+        const crop =
+            cropSelect.value;
+
+
+        dateSelect.innerHTML =
+            '<option value="">Select Procurement Date</option>';
+
+        timeSelect.innerHTML =
+            '<option value="">Select Time Slot</option>';
+
+
+        if (!center || !crop) {
+            return;
+        }
+
+
+        const dates = [];
+
+
+        allSlots.forEach(function(slot) {
+
+            if (
+                slot.center_name === center &&
+                slot.crop_name === crop &&
+                !dates.includes(slot.date)
+            ) {
+                dates.push(slot.date);
+            }
+
+        });
+
+
+        dates.forEach(function(date) {
+
+            const option =
+                document.createElement("option");
+
+            option.value = date;
+            option.innerText = date;
+
+            dateSelect.appendChild(option);
+
+        });
+
+    }
+);
+
+
+/* ================= LOAD TIMES ================= */
+
+dateSelect.addEventListener(
+    "change",
+    function() {
+
+        const center =
+            centerSelect.value;
+
+        const crop =
+            cropSelect.value;
+
+        const date =
+            dateSelect.value;
+
+
+        timeSelect.innerHTML =
+            '<option value="">Select Time Slot</option>';
+
+
+        if (!center || !crop || !date) {
+            return;
+        }
+
+
+        allSlots.forEach(function(slot) {
+
+            if (
+                slot.center_name === center &&
+                slot.crop_name === crop &&
+                slot.date === date
+            ) {
+
+                const option =
+                    document.createElement("option");
+
+
+                option.value =
+                    slot.start_time +
+                    " - " +
+                    slot.end_time;
+
+
+                option.innerText =
+                    slot.start_time +
+                    " - " +
+                    slot.end_time;
+
+
+                timeSelect.appendChild(option);
+
+            }
+
+        });
+
+    }
+);
+
+
+/* ================= BOOK SLOT ================= */
+
+document.getElementById("slotForm")
+.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const center =
+            centerSelect.value;
+
+        const crop =
+            cropSelect.value;
+
+        const quantity =
+            document.getElementById("quantity").value;
+
+        const date =
+            dateSelect.value;
+
+        const time =
+            timeSelect.value;
+
+        const token =
+            localStorage.getItem("kisanSetuToken");
+
+
+        /* ================= VALIDATION ================= */
+
+        if (!token) {
+
+            alert("Please login first.");
+
+            window.location.href =
+                "index.html";
+
+            return;
+        }
+
+
+        if (Number(quantity) < 1) {
+
+            alert(
+                "Quantity must be at least 1 quintal."
+            );
+
+            return;
+        }
+
+
+        if (!center) {
+
+            alert(
+                "Please select a procurement centre."
+            );
+
+            return;
+        }
+
+
+        if (!crop) {
+
+            alert(
+                "Please select a crop."
+            );
+
+            return;
+        }
+
+
+        if (!date) {
+
+            alert(
+                "Please select a procurement date."
+            );
+
+            return;
+        }
+
+
+        if (!time) {
+
+            alert(
+                "Please select a time slot."
+            );
+
+            return;
+        }
+
+
+        try {
+
+            /* ================= FIND SELECTED SLOT ================= */
+
+            const selectedSlot =
+                allSlots.find(function(slot) {
+
+                    return (
+                        slot.center_name === center &&
+                        slot.crop_name === crop &&
+                        slot.date === date &&
+                        (
+                            slot.start_time +
+                            " - " +
+                            slot.end_time
+                        ) === time
+                    );
+
+                });
+
+
+            if (!selectedSlot) {
+
+                alert(
+                    "This slot is not available in the system."
+                );
+
+                return;
+            }
+
+
+            /* ================= CREATE BOOKING ================= */
+
+            const bookingResponse =
+                await fetch(
+                    "http://127.0.0.1:8000/bookings",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                "Bearer " + token
+                        },
+
+                        body: JSON.stringify({
+
+                            slot_id:
+                                selectedSlot.id,
+
+                            quantity_quintal:
+                                Number(quantity)
+
+                        })
+                    }
+                );
+
+
+            const bookingData =
+                await bookingResponse.json();
+
+
+            if (!bookingResponse.ok) {
+
+                alert(
+                    bookingData.detail ||
+                    "Booking failed."
+                );
+
+                return;
+            }
+
+
+            /* ================= SUCCESS ================= */
+
+            alert(
+                "Procurement Slot Booked Successfully!\n\n" +
+                "Booking Code: " +
+                bookingData.booking_code
+            );
+
+
+            window.location.href =
+                "dashboard.html";
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Unable to connect to the server.\n" +
+                "Please make sure the backend is running."
+            );
+        }
+
+    }
+);
+
+
+/* ================= START ================= */
+
+loadSlots();
+
+</script>
+
+</body>
+</html>

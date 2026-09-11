@@ -1,0 +1,1671 @@
+index.html:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kisan Upaj Setu | Smart Procurement Platform</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #f7faf7;
+            color: #18351f;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            width: 100%;
+            background: white;
+            padding: 16px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 21px;
+            font-weight: bold;
+            color: #16843b;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: #16843b;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 21px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #29432f;
+            font-size: 15px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #16843b;
+        }
+
+        .nav-btn {
+            background: #16843b;
+            color: white !important;
+            padding: 11px 18px;
+            border-radius: 9px;
+        }
+
+        .nav-btn:hover {
+            background: #0d682d;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 650px;
+            padding: 75px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+            background:
+                radial-gradient(circle at 90% 10%, rgba(40,170,80,0.15), transparent 30%),
+                linear-gradient(135deg, #f7fff8, #edf8ef);
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #e1f5e7;
+            color: #16843b;
+            padding: 9px 15px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 54px;
+            line-height: 1.12;
+            margin-bottom: 22px;
+            color: #12351c;
+        }
+
+        .hero h1 span {
+            color: #16843b;
+        }
+
+        .hero p {
+            color: #5c6e60;
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            padding: 14px 23px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .primary-btn {
+            background: #16843b;
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background: #0d682d;
+            transform: translateY(-2px);
+        }
+
+        .secondary-btn {
+            border: 1px solid #16843b;
+            color: #16843b;
+            background: white;
+        }
+
+        .secondary-btn:hover {
+            background: #eaf8ed;
+        }
+
+        /* ================= HERO DASHBOARD ================= */
+
+        .hero-card {
+            width: 460px;
+            max-width: 100%;
+            background: white;
+            border-radius: 22px;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(30,100,50,0.15);
+            border: 1px solid #e2eee4;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .card-top h3 {
+            font-size: 18px;
+        }
+
+        .live {
+            background: #e6f8eb;
+            color: #16843b;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .crop-card {
+            background: #f4faf5;
+            padding: 17px;
+            border-radius: 14px;
+            margin-bottom: 14px;
+        }
+
+        .crop-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .crop-name {
+            font-weight: bold;
+        }
+
+        .price {
+            color: #16843b;
+            font-weight: bold;
+        }
+
+        .progress {
+            height: 8px;
+            background: #dce9df;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #16843b;
+            border-radius: 10px;
+        }
+
+        .dashboard-bottom {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .mini-card {
+            padding: 15px;
+            background: #f9fbf9;
+            border: 1px solid #e6eee7;
+            border-radius: 12px;
+        }
+
+        .mini-card small {
+            color: #708074;
+        }
+
+        .mini-card strong {
+            display: block;
+            margin-top: 5px;
+            font-size: 18px;
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            padding: 30px 7%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            background: white;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 18px;
+        }
+
+        .stat h2 {
+            color: #16843b;
+            font-size: 29px;
+        }
+
+        .stat p {
+            color: #69776c;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        /* ================= SECTION ================= */
+
+        section {
+            padding: 80px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: #17391f;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: #69776c;
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        /* ================= FEATURES ================= */
+
+        .features {
+            background: white;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .feature {
+            padding: 28px;
+            border-radius: 18px;
+            background: #f8fbf8;
+            border: 1px solid #e5eee6;
+            transition: 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 12px 30px rgba(20,100,40,0.10);
+        }
+
+        .feature-icon {
+            width: 52px;
+            height: 52px;
+            background: #e2f5e7;
+            color: #16843b;
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            margin-bottom: 18px;
+        }
+
+        .feature h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .feature p {
+            color: #69776c;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* ================= ABOUT ================= */
+
+        .about {
+            background: #f1f8f2;
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-size: 38px;
+            margin-bottom: 18px;
+        }
+
+        .about-content h2 span {
+            color: #16843b;
+        }
+
+        .about-content p {
+            color: #637166;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+
+        .about-points {
+            display: grid;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .about-point {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .check {
+            width: 27px;
+            height: 27px;
+            border-radius: 50%;
+            background: #16843b;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        .about-visual {
+            background: white;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 15px 40px rgba(30,100,50,0.10);
+        }
+
+        .farmer-box {
+            background: linear-gradient(135deg, #16843b, #32a653);
+            color: white;
+            padding: 35px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .farmer-box::after {
+            content: "🌾";
+            position: absolute;
+            font-size: 130px;
+            right: 10px;
+            bottom: -25px;
+            opacity: 0.18;
+        }
+
+        .farmer-box h3 {
+            font-size: 26px;
+            margin-bottom: 12px;
+        }
+
+        .farmer-box p {
+            max-width: 330px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .about-stat {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .about-stat div {
+            background: #f4f9f4;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .about-stat strong {
+            display: block;
+            color: #16843b;
+            font-size: 20px;
+        }
+
+        .about-stat small {
+            color: #718074;
+        }
+
+        /* ================= PROCUREMENT CENTERS ================= */
+
+        .center-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .center {
+            background: white;
+            border: 1px solid #e4ece5;
+            border-radius: 18px;
+            padding: 25px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .center:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(30,100,50,0.10);
+            border-color: #16843b;
+        }
+
+        .center-icon {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .center h3 {
+            margin-bottom: 8px;
+        }
+
+        .center p {
+            color: #718074;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .availability {
+            margin-top: 15px;
+            display: inline-block;
+            background: #e6f7ea;
+            color: #16843b;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .map-hint {
+            display: block;
+            margin-top: 10px;
+            color: #16843b;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* ================= HOW IT WORKS ================= */
+
+        .how {
+            background: white;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #16843b;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto auto 17px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .step h3 {
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            color: #718074;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* ================= CTA ================= */
+
+        .cta {
+            padding: 70px 7%;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #116f32, #219348);
+            border-radius: 25px;
+            padding: 55px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: "🌱";
+            position: absolute;
+            left: 7%;
+            top: 20px;
+            font-size: 75px;
+            opacity: 0.12;
+        }
+
+        .cta-box::after {
+            content: "🌾";
+            position: absolute;
+            right: 7%;
+            bottom: 0;
+            font-size: 90px;
+            opacity: 0.12;
+        }
+
+        .cta-box h2 {
+            font-size: 34px;
+            margin-bottom: 13px;
+        }
+
+        .cta-box p {
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+
+        .cta-btn {
+            background: white;
+            color: #16843b;
+            padding: 13px 25px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #12351c;
+            color: white;
+            padding: 45px 7% 25px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        footer h3 {
+            margin-bottom: 15px;
+        }
+
+        footer p,
+        footer a {
+            color: #b8c8bb;
+            font-size: 14px;
+            line-height: 1.7;
+            text-decoration: none;
+        }
+
+        footer a {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        .copyright {
+            border-top: 1px solid #31523a;
+            padding-top: 20px;
+            text-align: center;
+            color: #9eafa1;
+            font-size: 13px;
+        }
+
+        /* ================= LOGIN MODAL ================= */
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.55);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: white;
+            width: 420px;
+            max-width: 100%;
+            padding: 30px;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 25px;
+            cursor: pointer;
+            color: #657267;
+        }
+
+        .modal-box h2 {
+            margin-bottom: 8px;
+            color: #17391f;
+        }
+
+        .modal-box p {
+            color: #718074;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d7e2d9;
+            border-radius: 9px;
+            margin-bottom: 13px;
+            outline: none;
+        }
+
+        .input:focus {
+            border-color: #16843b;
+        }
+
+        .login-btn {
+            width: 100%;
+            border: none;
+            padding: 13px;
+            border-radius: 9px;
+            background: #16843b;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background: #0d682d;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+
+        .register-link a {
+            color: #16843b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 950px) {
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content {
+                max-width: 700px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .feature-grid,
+            .center-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            nav {
+                padding: 13px 5%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 55px 5%;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            section {
+                padding: 60px 5%;
+            }
+
+            .feature-grid,
+            .center-grid,
+            .steps,
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 30px;
+            }
+
+            .cta-box {
+                padding: 40px 20px;
+            }
+
+            .cta-box h2 {
+                font-size: 28px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-stat {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <div class="logo">
+        <div class="logo-icon">🌾</div>
+        Kisan Upaj Setu
+    </div>
+
+    <div class="nav-links">
+
+        <a href="#home">Home</a>
+
+        <a href="#features">Features</a>
+
+        <a href="#about">About</a>
+
+        <a href="#centers">Procurement Centers</a>
+
+        <a href="#" onclick="openLogin(); return false;">
+            Farmer Login
+        </a>
+
+        <a href="register.html" class="nav-btn">
+            Register
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="tag">
+            🌱 Smart Farming • Smart Procurement
+        </div>
+
+        <h1>
+            Sell Your <span>Harvest</span><br>
+            Smarter & Faster
+        </h1>
+
+        <p>
+            Kisan Upaj Setu is a smart digital platform that connects
+            farmers with procurement centers and makes crop selling
+            simple, transparent and organized.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="register.html" class="primary-btn">
+                Register as Farmer →
+            </a>
+
+            <a href="#how" class="secondary-btn">
+                How It Works
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Dashboard Preview -->
+
+    <div class="hero-card">
+
+        <div class="card-top">
+
+            <h3>📊 Procurement Dashboard</h3>
+
+            <span class="live">
+                ● LIVE
+            </span>
+
+        </div>
+
+        <div class="crop-card">
+
+            <div class="crop-header">
+                <span class="crop-name">🌾 Wheat</span>
+                <span class="price">₹2,425 / Qtl</span>
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar" style="width:78%;"></div>
+            </div>
+
+        </div>
+
+        <div class="crop-card">
+
+            <div class="crop-header">
+                <span class="crop-name">🌾 Paddy</span>
+                <span class="price">₹2,310 / Qtl</span>
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar" style="width:62%;"></div>
+            </div>
+
+        </div>
+
+        <div class="crop-card">
+
+            <div class="crop-header">
+                <span class="crop-name">🌱 Mustard</span>
+                <span class="price">₹5,650 / Qtl</span>
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar" style="width:48%;"></div>
+            </div>
+
+        </div>
+
+        <div class="dashboard-bottom">
+
+            <div class="mini-card">
+                <small>Today's Tokens</small>
+                <strong>124</strong>
+            </div>
+
+            <div class="mini-card">
+                <small>Avg. Waiting Time</small>
+                <strong>32 min</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STATS ================= -->
+
+<div class="stats">
+
+    <div class="stat">
+        <h2>500+</h2>
+        <p>Farmers Connected</p>
+    </div>
+
+    <div class="stat">
+        <h2>25+</h2>
+        <p>Procurement Centers</p>
+    </div>
+
+    <div class="stat">
+        <h2>10K+</h2>
+        <p>Quintals Managed</p>
+    </div>
+
+    <div class="stat">
+        <h2>24/7</h2>
+        <p>Digital Access</p>
+    </div>
+
+</div>
+
+
+<!-- ================= FEATURES ================= -->
+
+<section class="features" id="features">
+
+    <div class="section-title">
+
+        <h2>Everything a Farmer Needs</h2>
+
+        <p>
+            A simple digital platform designed to make crop
+            procurement more transparent and convenient.
+        </p>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+        <div class="feature">
+
+            <div class="feature-icon">📅</div>
+
+            <h3>Smart Slot Booking</h3>
+
+            <p>
+                Book your procurement slot in advance and avoid
+                unnecessary waiting at the center.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">🎟️</div>
+
+            <h3>Digital Token</h3>
+
+            <p>
+                Get a digital token and track your position in
+                the procurement queue easily.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">📈</div>
+
+            <h3>Market Information</h3>
+
+            <p>
+                View useful crop and procurement information
+                before taking your produce to the center.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">📍</div>
+
+            <h3>Nearby Centers</h3>
+
+            <p>
+                Find procurement centers and choose the one
+                that is convenient for you.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">🤖</div>
+
+            <h3>AI Farmer Assistant</h3>
+
+            <p>
+                Get simple answers and guidance for common
+                farming and procurement related questions.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">🔒</div>
+
+            <h3>Transparent Process</h3>
+
+            <p>
+                Keep the procurement process organized,
+                trackable and easy to understand.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section class="about" id="about">
+
+    <div class="about-container">
+
+        <div class="about-content">
+
+            <div class="tag">
+                🌱 About Kisan Upaj Setu
+            </div>
+
+            <h2>
+                Technology That Works
+                <span>For Farmers</span>
+            </h2>
+
+            <p>
+                Kisan Upaj Setu is designed to bridge the gap between
+                farmers and procurement centers through a simple
+                digital platform.
+            </p>
+
+            <p>
+                Instead of spending unnecessary time waiting at
+                procurement centers, farmers can organize their visit,
+                check useful information and manage their procurement
+                journey digitally.
+            </p>
+
+            <div class="about-points">
+
+                <div class="about-point">
+                    <div class="check">✓</div>
+                    Simple and farmer-friendly interface
+                </div>
+
+                <div class="about-point">
+                    <div class="check">✓</div>
+                    Organized procurement process
+                </div>
+
+                <div class="about-point">
+                    <div class="check">✓</div>
+                    Digital-first approach for rural users
+                </div>
+
+                <div class="about-point">
+                    <div class="check">✓</div>
+                    Future-ready AI assistance
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="about-visual">
+
+            <div class="farmer-box">
+
+                <h3>🌾 From Farm to Market</h3>
+
+                <p>
+                    Making the journey from harvesting to
+                    procurement more organized, transparent
+                    and convenient.
+                </p>
+
+            </div>
+
+
+            <div class="about-stat">
+
+                <div>
+                    <strong>01</strong>
+                    <small>Register</small>
+                </div>
+
+                <div>
+                    <strong>02</strong>
+                    <small>Book Slot</small>
+                </div>
+
+                <div>
+                    <strong>03</strong>
+                    <small>Sell Crop</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PROCUREMENT CENTERS ================= -->
+
+<section id="centers">
+
+    <div class="section-title">
+
+        <h2>Procurement Centers</h2>
+
+        <p>
+            Click on any center to view its location on Google Maps.
+        </p>
+
+    </div>
+
+
+    <div class="center-grid">
+
+
+        <!-- MODEL TOWN -->
+
+        <div
+            class="center"
+            onclick="openMap('Model Town, Delhi')"
+            title="Open location in Google Maps"
+        >
+
+            <div class="center-icon">🏢</div>
+
+            <h3>Model Town Center</h3>
+
+            <p>
+                Central procurement facility with organized
+                token and queue management.
+            </p>
+
+            <span class="availability">
+                ● Available
+            </span>
+
+            <span class="map-hint">
+                📍 Click to view on map
+            </span>
+
+        </div>
+
+
+        <!-- NAJAFGARH -->
+
+        <div
+            class="center"
+            onclick="openMap('Najafgarh, Delhi')"
+            title="Open location in Google Maps"
+        >
+
+            <div class="center-icon">🌾</div>
+
+            <h3>Najafgarh Center</h3>
+
+            <p>
+                Farmer-friendly procurement center for
+                major seasonal crops.
+            </p>
+
+            <span class="availability">
+                ● Available
+            </span>
+
+            <span class="map-hint">
+                📍 Click to view on map
+            </span>
+
+        </div>
+
+
+        <!-- MUNDKA -->
+
+        <div
+            class="center"
+            onclick="openMap('Mundka, Delhi')"
+            title="Open location in Google Maps"
+        >
+
+            <div class="center-icon">🚜</div>
+
+            <h3>Mundka Center</h3>
+
+            <p>
+                Digital slot-based procurement facility
+                for nearby farmers.
+            </p>
+
+            <span class="availability">
+                ● Available
+            </span>
+
+            <span class="map-hint">
+                📍 Click to view on map
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HOW IT WORKS ================= -->
+
+<section class="how" id="how">
+
+    <div class="section-title">
+
+        <h2>How Kisan Upaj Setu Works</h2>
+
+        <p>
+            Four simple steps to make your procurement journey easier.
+        </p>
+
+    </div>
+
+
+    <div class="steps">
+
+        <div class="step">
+
+            <div class="step-number">1</div>
+
+            <h3>Register</h3>
+
+            <p>
+                Create your farmer profile using basic details.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">2</div>
+
+            <h3>Add Crop</h3>
+
+            <p>
+                Enter the crop and quantity you want to sell.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">3</div>
+
+            <h3>Book Slot</h3>
+
+            <p>
+                Select a suitable procurement center and slot.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">4</div>
+
+            <h3>Visit & Sell</h3>
+
+            <p>
+                Visit the center with your digital token.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta">
+
+    <div class="cta-box">
+
+        <h2>Ready to Make Procurement Smarter?</h2>
+
+        <p>
+            Join Kisan Upaj Setu and experience a simpler
+            way to manage your crop procurement.
+        </p>
+
+        <a href="register.html" class="cta-btn">
+            Register as Farmer →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-grid">
+
+        <div>
+
+            <h3>🌾 Kisan Upaj Setu</h3>
+
+            <p>
+                A smart procurement platform designed to
+                connect farmers with digital procurement services.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h3>Quick Links</h3>
+
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#about">About</a>
+            <a href="#centers">Procurement Centers</a>
+
+        </div>
+
+
+        <div>
+
+            <h3>Farmer</h3>
+
+            <a href="#" onclick="openLogin(); return false;">
+                Login
+            </a>
+
+            <a href="register.html">
+                Register
+            </a>
+
+            <a href="book-slot.html">
+                Book Slot
+            </a>
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+        © 2026 Kisan Upaj Setu. Smart Procurement for a Better Tomorrow.
+    </div>
+
+</footer>
+
+
+<!-- ================= LOGIN POPUP ================= -->
+
+<div class="modal" id="loginModal">
+
+    <div class="modal-box">
+
+        <span class="close" onclick="closeLogin()">×</span>
+
+        <h2>Farmer Login</h2>
+
+        <p>
+            Login to access your farmer dashboard.
+        </p>
+
+        <input
+            type="text"
+            class="input"
+            id="loginMobile"
+            placeholder="Mobile Number"
+        >
+
+        <input
+            type="password"
+            class="input"
+            id="loginPassword"
+            placeholder="Password"
+        >
+
+        <button
+            class="login-btn"
+            onclick="login()"
+        >
+            Login
+        </button>
+
+        <div class="register-link">
+
+            New farmer?
+
+            <a href="register.html">
+                Create Account
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+function openLogin() {
+
+    document.getElementById("loginModal").style.display = "flex";
+
+}
+
+
+function closeLogin() {
+
+    document.getElementById("loginModal").style.display = "none";
+
+}
+
+
+window.onclick = function(event) {
+
+    const modal =
+        document.getElementById("loginModal");
+
+    if (event.target === modal) {
+
+        modal.style.display = "none";
+
+    }
+
+};
+
+
+/* ================= GOOGLE MAP ================= */
+
+function openMap(location) {
+
+    const mapUrl =
+        "https://www.google.com/maps/search/?api=1&query=" +
+        encodeURIComponent(location);
+
+    window.open(mapUrl, "_blank");
+
+}
+
+
+/* ================= DEMO LOGIN ================= */
+
+async function login() {
+
+    const mobile =
+        document.getElementById("loginMobile").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+
+    if (mobile === "" || password === "") {
+        alert("Please enter mobile number and password.");
+        return;
+    }
+
+
+    if (!/^\d{10}$/.test(mobile)) {
+        alert("Please enter a valid 10-digit mobile number.");
+        return;
+    }
+
+
+    if (password.length < 4) {
+        alert("Password must contain at least 4 characters.");
+        return;
+    }
+
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:8000/auth/login",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    phone: mobile,
+                    password: password
+                })
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        if (!response.ok) {
+            alert(data.detail || "Invalid mobile number or password.");
+            return;
+        }
+
+
+        // Save JWT token
+        localStorage.setItem(
+            "kisanSetuToken",
+            data.access_token
+        );
+
+
+        // Save logged-in user
+        localStorage.setItem(
+            "kisanSetuUser",
+            JSON.stringify(data.user)
+        );
+
+
+        alert("Login Successful!");
+
+
+        window.location.href = "dashboard.html";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Unable to connect to the server.\n" +
+            "Please make sure the backend is running."
+        );
+
+    }
+}
+
+</script>
+
+
+</body>
+</html>
